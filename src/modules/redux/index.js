@@ -18,6 +18,8 @@ import genres from "./genres/reducer";
 import histories from "./histories/reducer";
 import authors from "./authors/reducer";
 import users from "./users/reducer";
+import apps from "./apps/reducer";
+
 
 // Combine The Reducers
 const reducer = combineReducers({
@@ -26,7 +28,8 @@ const reducer = combineReducers({
   genres,
   histories,
   authors,
-  users
+  users,
+  apps
 })
 
 /**
@@ -41,6 +44,7 @@ const persistConfig = {
     "genres",
     "authors",
     "users",
+    "apps"
   ]
 }
 
@@ -64,6 +68,7 @@ export * from './genres/actions';
 export * from './histories/actions';
 export * from './authors/actions';
 export * from './users/actions';
+export * from './apps/actions';
 
 /**
  * selector
