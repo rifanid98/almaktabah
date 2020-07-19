@@ -3,7 +3,6 @@
  */
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 /**
  * Sample React Native App
@@ -23,30 +22,19 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store } from 'modules';
 
 /**
- * Screens's Route
+ * Screens's Gate
  */
-import { screenRoutes } from 'screens';
+import { RootGate } from 'gates';
 
-const App = () => {
+const App = (props) => {
   const persistor = persistStore(store);
-  const Stack = createStackNavigator();
-
+  
   return (
     <>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName='Login'
-              screenOptions={{
-                headerStyle: {
-                  borderBottomWidth: 0,
-                  elevation: 0
-                }
-              }}
-            >
-              {screenRoutes.map((screen, index) => <Stack.Screen name={screen.name} component={screen.component} options={screen.options} />)}
-            </Stack.Navigator>
+            <RootGate />
           </NavigationContainer>
         </PersistGate>
       </Provider>
