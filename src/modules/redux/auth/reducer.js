@@ -53,6 +53,39 @@ const auth = (state = initialState, action) => {
         errorMsg: '',
       }
 
+    case actionType.REFRESH_TOKEN_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    case actionType.REFRESH_TOKEN_REJECTED:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: 'Data Rejected'
+      }
+    case actionType.REFRESH_TOKEN_FULFILLED:
+      const data = action.payload.data.data;
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        errorMsg: '',
+        data: {
+          user_id: state.user_id,
+          username: state.username,
+          full_name: state.full_name,
+          email: state.email,
+          role: state.role,
+          image: state.image,
+          added: state.added,
+          updated: state.updated,
+          tokenLogin: data.tokenLogin,
+          tokenRefresh: data.tokenRefresh
+        }
+      }
     case actionType.LOGOUT:
       return {
         ...state,

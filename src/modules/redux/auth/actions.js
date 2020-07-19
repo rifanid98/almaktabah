@@ -30,6 +30,20 @@ export const register = (data) => {
   }
 }
 
+export const refershtoken = (token) => {
+  return {
+    type: actionType.REFRESH_TOKEN,
+    payload: Axios({
+      method: 'POST',
+      url: apiUri.auth.register,
+      data: token,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
+}
+
 export const logout = () => {
   return {
     type: actionType.LOGOUT

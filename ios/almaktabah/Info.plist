@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -53,5 +53,69 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Merriweather-Black.ttf</string>
+		<string>Merriweather-BlackItalic.ttf</string>
+		<string>Merriweather-Bold.ttf</string>
+		<string>Merriweather-BoldItalic.ttf</string>
+		<string>Merriweather-Italic.ttf</string>
+		<string>Merriweather-Light.ttf</string>
+		<string>Merriweather-LightItalic.ttf</string>
+		<string>Merriweather-Regular.ttf</string>
+		<string>Nunito-Black.ttf</string>
+		<string>Nunito-BlackItalic.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-BoldItalic.ttf</string>
+		<string>Nunito-ExtraBold.ttf</string>
+		<string>Nunito-ExtraBoldItalic.ttf</string>
+		<string>Nunito-ExtraLight.ttf</string>
+		<string>Nunito-ExtraLightItalic.ttf</string>
+		<string>Nunito-Italic.ttf</string>
+		<string>Nunito-Light.ttf</string>
+		<string>Nunito-LightItalic.ttf</string>
+		<string>Nunito-Regular.ttf</string>
+		<string>Nunito-SemiBold.ttf</string>
+		<string>Nunito-SemiBoldItalic.ttf</string>
+		<string>OpenSans-Bold.ttf</string>
+		<string>OpenSans-BoldItalic.ttf</string>
+		<string>OpenSans-ExtraBold.ttf</string>
+		<string>OpenSans-ExtraBoldItalic.ttf</string>
+		<string>OpenSans-Italic.ttf</string>
+		<string>OpenSans-Light.ttf</string>
+		<string>OpenSans-LightItalic.ttf</string>
+		<string>OpenSans-Regular.ttf</string>
+		<string>OpenSans-SemiBold.ttf</string>
+		<string>OpenSans-SemiBoldItalic.ttf</string>
+		<string>PlayfairDisplay-Black.ttf</string>
+		<string>PlayfairDisplay-BlackItalic.ttf</string>
+		<string>PlayfairDisplay-Bold.ttf</string>
+		<string>PlayfairDisplay-BoldItalic.ttf</string>
+		<string>PlayfairDisplay-ExtraBold.ttf</string>
+		<string>PlayfairDisplay-ExtraBoldItalic.ttf</string>
+		<string>PlayfairDisplay-Italic.ttf</string>
+		<string>PlayfairDisplay-Medium.ttf</string>
+		<string>PlayfairDisplay-MediumItalic.ttf</string>
+		<string>PlayfairDisplay-Regular.ttf</string>
+		<string>PlayfairDisplay-SemiBold.ttf</string>
+		<string>PlayfairDisplay-SemiBoldItalic.ttf</string>
+		<string>ActaDisplayW01-Bold.ttf</string>
+		<string>ActaDisplayW04-Medium.ttf</string>
+		<string>SourceSerifPro-Black.ttf</string>
+		<string>SourceSerifPro-BlackItalic.ttf</string>
+		<string>SourceSerifPro-Bold.ttf</string>
+		<string>SourceSerifPro-BoldItalic.ttf</string>
+		<string>SourceSerifPro-ExtraLight.ttf</string>
+		<string>SourceSerifPro-ExtraLightItalic.ttf</string>
+		<string>SourceSerifPro-Italic.ttf</string>
+		<string>SourceSerifPro-Light.ttf</string>
+		<string>SourceSerifPro-LightItalic.ttf</string>
+		<string>SourceSerifPro-Regular.ttf</string>
+		<string>SourceSerifPro-SemiBold.ttf</string>
+		<string>SourceSerifPro-SemiBoldItalic.ttf</string>
+		<string>LibreBaskerville-Bold.ttf</string>
+		<string>LibreBaskerville-Italic.ttf</string>
+		<string>LibreBaskerville-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

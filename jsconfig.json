@@ -13,6 +13,8 @@
       "modules": ["./modules"],
       "utils": ["./utils"],
       "screens": ["./screens"],
+      "routes": ["./routes"],
+      "gates": ["./gates"],
       "assets": ["./assets"],
       "assets/images": ["./assets/images"],
       "assets/styles": ["./assets/styles"],
