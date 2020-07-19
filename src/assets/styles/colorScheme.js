@@ -1,0 +1,20 @@
+const colors = {
+  primary: {
+    primary: '#FFFFFF',
+    secondary: '#e6e6e6',
+    accent: '#413f57',
+    font: {
+      primary: '#4d4d4d',
+      secondary: '#808080'
+    }
+  },
+  secondary: {
+    primary: '#5b3c19',
+    secondary: '#f2ede6',
+    accent: '#738713'
+  }
+}
+const activeColorScheme = 'primary';
+const colorScheme = colors[activeColorScheme];
+
+export default colorScheme;
