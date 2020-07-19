@@ -92,7 +92,6 @@ const Login = (props) => {
             >
               Login
             </Button>
-            {/* <Button title="Login" onPress={handleSubmit(onSubmit)} /> */}
           </View>
         </View>
       </View>
