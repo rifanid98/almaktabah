@@ -1,24 +1,17 @@
-import Login from './Login'
-import Signup from './Signup'
+import Home from './Home'
+import Detail from './Detail'
+import Profile from './Profile'
+import { Manager } from './Manager'
+import Modal from './Modal'
 
 export {
-  Login,
-  Signup
+  Home,
+  Detail,
+  Profile,
+  Manager,
+  Modal
 }
 
-export const screenRoutes = [
-  {
-    name: 'Login',
-    component: Login,
-    options: {
-      title: 'Login Page'
-    }
-  },
-  {
-    name: 'Signup',
-    component: Signup,
-    options: {
-      title: 'Signup Page'
-    }
-  }
-];
+export * from './OnBoard'
+export * from './Auth'
+export * from './Search'
