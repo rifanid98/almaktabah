@@ -3,7 +3,8 @@ import appConfig from "./appConfig";
 const apiUri = {
   auth: {
     login: `${appConfig.url.api}/auth/login`,
-    register: `${appConfig.url.api}/auth/register`
+    register: `${appConfig.url.api}/auth/register`,
+    refreshtoken: `${appConfig.url.api}/auth/refreshtoken`
   },
   books: `${appConfig.url.api}/books`,
   genres: `${appConfig.url.api}/genres`,
