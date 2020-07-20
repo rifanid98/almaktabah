@@ -4,7 +4,6 @@ import ScreenFilter from './ScreenFilter';
 import SearchGridItem from './SearchGridItem';
 import GenresList from './GenresList';
 import ListItem from './ListItem';
-import ModalItem from './ModalItem';
 
 export {
   ScreenHeader,
@@ -13,5 +12,4 @@ export {
   SearchGridItem,
   GenresList,
   ListItem,
-  ModalItem
 }
