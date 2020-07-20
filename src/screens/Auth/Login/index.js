@@ -82,6 +82,13 @@ const Login = (props) => {
               />
               {errors.password && <Text>This is required.</Text>}
             </View>
+            <View style={styles.feedback}>
+              <Text
+                style={styles.feedbackText}
+                onPress={() => props.navigation.navigate('signup1')}
+              >Register</Text>
+              <Text style={[styles.feedbackText, styles.feedbackTextRight]}>Forgot Password ?</Text>
+            </View>
 
             
             <Button
