@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { moleculesStyles as styles } from 'assets/styles'
 
-const ScreenHeader = memo((props) => {
+const ScreenHeader = (props) => {
 
   return (
     <>
@@ -23,6 +23,6 @@ const ScreenHeader = memo((props) => {
       </View>
     </>
   )
-})
+}
 
-export default ScreenHeader;
+export default React.memo(ScreenHeader);

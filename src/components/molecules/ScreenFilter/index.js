@@ -1,17 +1,17 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { moleculesStyles as styles } from 'assets/styles'
 
-const ScreenFilter = memo((props) => {
+const ScreenFilter = (props) => {
   const [sort, setSort] = useState(true)
   const [sortBy, setSortBy] = useState(null)
-  
+
   // const getSort = ;
   const sortType = props.filterItems.sortType[sort ? 'asc' : 'desc']
   const searchSortBy = props.filterItems.sortBy
   return (
     <>
-      
+
       <View style={styles.filter}>
         <View style={styles.filterItemsLeft}>
           <Text style={[styles.filterItem]}>Result</Text>
@@ -23,6 +23,6 @@ const ScreenFilter = memo((props) => {
       </View>
     </>
   )
-})
+}
 
-export default ScreenFilter;
+export default React.memo(ScreenFilter);
