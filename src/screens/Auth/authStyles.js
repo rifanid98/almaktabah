@@ -16,6 +16,9 @@ const authStyles = StyleSheet.create({
   header: {
     marginTop: 150,
   },
+  headerSignup: {
+    marginTop: 50,
+  },
   h1: {
     fontFamily: font.title,
     fontSize:48
@@ -53,6 +56,19 @@ const authStyles = StyleSheet.create({
     marginTop: 85,
     padding: 20,
     backgroundColor: color.accent
+  },
+
+  feedback: {
+    flexDirection: 'row',
+    marginTop: -20
+  },
+  feedbackText: {
+    flex: 1,
+    fontFamily: font.bodyBold,
+    fontSize: 18
+  },
+  feedbackTextRight: {
+    textAlign: 'right'
   }
 });
 
