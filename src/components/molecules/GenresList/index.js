@@ -39,4 +39,4 @@ const GenresList = (props) => {
   )
 }
 
-export default GenresList;
+export default React.memo(GenresList)
