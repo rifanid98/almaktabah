@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { register } from 'modules';
 import { authStyles as styles } from 'screens/Auth';
 import { signupSchema } from 'utils';
+import { ScreenHeader } from 'components';
 
 
 const Signup2 = (props) => {
@@ -64,7 +65,8 @@ const Signup2 = (props) => {
   return (
     <>
       <View style={styles.wrapper}>
-        <View style={styles.header}>
+        <ScreenHeader navigation={props.navigation} title="" />
+        <View style={styles.headerSignup}>
           <Text style={styles.h1}>One More Step!,</Text>
           <Text style={styles.small}>Please complete data below</Text>
         </View>

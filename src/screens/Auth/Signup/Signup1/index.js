@@ -3,6 +3,7 @@ import { Text, View, TextInput, Alert } from 'react-native';
 import Button from 'react-native-button'
 import { useForm, Controller } from 'react-hook-form';
 import { authStyles as styles } from 'screens/Auth';
+import { ScreenHeader } from 'components';
 
 const Signup1 = (props) => {
   const { control, handleSubmit, errors } = useForm();
@@ -23,7 +24,8 @@ const Signup1 = (props) => {
   return (
     <>
       <View style={styles.wrapper}>
-        <View style={styles.header}>
+        <ScreenHeader navigation={props.navigation} title="" />
+        <View style={styles.headerSignup}>
           <Text style={styles.h1}>Hello Awesome!,</Text>
           <Text style={styles.small}>Please register your account</Text>
         </View>
