@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
-import { ScreenHeader, BookModalBody, GenreModalBody, AuthorModalBody, UserModalBody } from 'components'
+import { ScreenHeader, BookEditModalBody, GenreEditModalBody, AuthorEditModalBody, UserEditModalBody } from 'components'
 import { modalStyles as styles } from 'assets/styles'
 
 const Modal = (props) => {
@@ -8,20 +8,19 @@ const Modal = (props) => {
   const screen = props.route.params.screen
 
   const showBody = (getScreen, data) => {
-    console.log(getScreen)
     switch (getScreen) {
       
       case 'book':
-        return <BookModalBody data={data} />
+        return <BookEditModalBody data={data} />
 
       case 'genre':
-        return <GenreModalBody data={data} />
+        return <GenreEditModalBody data={data} />
         
       case 'author':
-        return <AuthorModalBody data={data} />
+        return <AuthorEditModalBody data={data} />
         
       case 'user':
-        return <UserModalBody data={data} />
+        return <UserEditModalBody data={data} />
         
         break;
     

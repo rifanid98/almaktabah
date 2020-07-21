@@ -8,7 +8,7 @@ export const getCategories = (token, params = "") => {
     type: actionType.GET_GENRES,
     payload: Axios({
       method: 'GET',
-      url: `${apiUri.genres}${getParams}`,
+      url: `${apiUri.genres.all}${getParams}`,
       headers: {
         'authorization': token
       }
@@ -21,7 +21,20 @@ export const getGenres = (token, params = "") => {
     type: actionType.GET_GENRES,
     payload: Axios({
       method: 'GET',
-      url: `${apiUri.genres}${getParams}`,
+      url: `${apiUri.genres.all}${getParams}`,
+      headers: {
+        'authorization': token
+      }
+    })
+  }
+}
+export const getUsedGenres = (token, params = "") => {
+  const getParams = params ? `/${params}` : '';
+  return {
+    type: actionType.GET_GENRES,
+    payload: Axios({
+      method: 'GET',
+      url: `${apiUri.genres.used}${getParams}`,
       headers: {
         'authorization': token
       }
@@ -34,7 +47,7 @@ export const getDetailGenre = (token, id) => {
     type: actionType.GET_GENRES,
     payload: Axios({
       method: 'GET',
-      url: `${apiUri.genres}${getId}`,
+      url: `${apiUri.genres.all}${getId}`,
       headers: {
         'authorization': token
       }
@@ -61,7 +74,7 @@ export const patchGenre = (token, data, id) => {
     type: actionType.PATCH_GENRE,
     payload: Axios({
       method: 'PATCH',
-      url: `${apiUri.genres}${getId}`,
+      url: `${apiUri.genres.all}${getId}`,
       data: data,
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -76,7 +89,7 @@ export const deleteGenre = (token, id) => {
     type: actionType.DELETE_GENRE,
     payload: Axios({
       method: 'DELETE',
-      url: `${apiUri.genres}${getId}`,
+      url: `${apiUri.genres.all}${getId}`,
       headers: {
         'authorization': token
       }

@@ -42,8 +42,12 @@ export const handleAsync = async promise => {
 };
 
 export const convertDate = date => {
-  if (!date) return null;
-  return moment(date).format("DD MMMM YYYY");
+  // if (!date) return null;
+  if (!date) {
+    return moment().format("DD ddd MMM YYYY")
+  } else {
+    return moment(date).format("DD MMMM YYYY");
+  }
 };
 
 export const decodeJwtToken = jwtToken => {

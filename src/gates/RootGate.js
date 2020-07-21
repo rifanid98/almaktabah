@@ -24,26 +24,26 @@ import { firstRun } from 'modules';
 
 const RootGate = (props) => {
   const Stack = createStackNavigator();
-  const [isFirstRun, setIsFirstRun] = useState(props.apps.firstRun)
-  const [auth, setAuth] = useState(props.auth ? props.auth.data : {})
+  // const [isFirstRun, setIsFirstRun] = useState(props.apps.firstRun)
+  // const [auth, setAuth] = useState(props.auth ? props.auth.data : {})
 
-  useEffect(() => {
-    setIsFirstRun(props.apps.firstRun)
-  }, [props.apps])
+  // useEffect(() => {
+  //   setIsFirstRun(props.apps.firstRun)
+  // }, [props.apps])
 
-  useEffect(() => {
-    setAuth(props.auth.data)
-  }, [props.auth])
+  // useEffect(() => {
+  //   setAuth(props.auth.data)
+  // }, [props.auth])
   return (
     <>
       <Stack.Navigator
-        initialRouteName={isFirstRun ? 'onboard' : 'auth'}
+        initialRouteName={props.apps.firstRun ? 'onboard' : 'auth'}
         screenOptions={{
           headerShown: false
         }}
       >
-        {isFirstRun ? <Stack.Screen name="onboard" component={OnBoardGate} />
-          : auth.tokenLogin
+        {props.apps.firstRun ? <Stack.Screen name="onboard" component={OnBoardGate} />
+          : props.auth.data.tokenLogin
             ? <Stack.Screen name="main" component={MainGate} />
             : <Stack.Screen name="auth" component={AuthGate} />
         }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { Home, Detail, Profile, Manager, Modal } from 'screens'
 import { SearchAllBooks, SearchBookByCategory } from 'screens/Search';
+import ManagerGate from './ManagerGate';
 
 const MainGate = (props) => {
   const Stack = createStackNavigator();
@@ -27,7 +28,8 @@ const MainGate = (props) => {
         <Stack.Screen name="searchAllBooks" component={SearchAllBooks} />
         <Stack.Screen name="searchBookByCategory" component={SearchBookByCategory} />
         <Stack.Screen name="profile" component={Profile} />
-        <Stack.Screen name="manager" component={Manager} />
+        {/* <Stack.Screen name="manager" component={Manager} /> */}
+        <Stack.Screen name="manager" component={ManagerGate} />
         <Stack.Screen name="modal" component={Modal} />
       </Stack.Navigator>
     </>

@@ -7,7 +7,10 @@ const apiUri = {
     refreshtoken: `${appConfig.url.api}/auth/refreshtoken`
   },
   books: `${appConfig.url.api}/books`,
-  genres: `${appConfig.url.api}/genres`,
+  genres: {
+    all: `${appConfig.url.api}/genres`,
+    used: `${appConfig.url.api}/genres/used/all`
+  },
   users: `${appConfig.url.api}/users`,
   histories: `${appConfig.url.api}/histories`,
   authors: `${appConfig.url.api}/authors`

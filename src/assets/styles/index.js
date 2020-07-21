@@ -14,6 +14,7 @@ import organismsStyles from './organismsStyles'
 import profileStyles from './profileStyles'
 import managerStyles from './managerStyles'
 import modalStyles from './modalStyles'
+import atomStyles from './atomStyles'
 
 export {
   reset,
@@ -31,5 +32,6 @@ export {
   organismsStyles,
   profileStyles,
   managerStyles,
-  modalStyles
+  modalStyles,
+  atomStyles
 }

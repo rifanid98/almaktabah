@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { font } from './font';
 import { colorScheme as color } from './index';
+import colors from './colors';
 
 /**
  * Style Variables
@@ -105,7 +106,7 @@ const detailStyles = StyleSheet.create({
   description: {
     fontFamily: font.body,
     fontSize: 22,
-    textAlign: 'justify',
+    textAlign: 'left',
     // height: 250,
     overflow: 'scroll'
   },
@@ -113,6 +114,14 @@ const detailStyles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     backgroundColor: color.accent,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20
+  },
+  button2: {
+    flexDirection: 'row',
+    width: '100%',
+    backgroundColor: colors.yellow,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20

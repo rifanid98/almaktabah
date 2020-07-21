@@ -1,12 +1,75 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, Image } from 'react-native'
 import { detailStyles as styles } from 'assets/styles'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { checkPendingHistory, borrowBook, returnBook } from 'modules';
 import { ScreenHeader } from 'components';
+import { alert } from 'utils';
 
 const Detail = (props) => {
+  const data = props.route.params.data
+  const [borrowed, setBorrowed] = useState(false)
+
+  useEffect(() => {
+    checkBorrowedBook()
+  }, [])
+
+  useEffect(() => {
+    console.log(borrowed);
+  }, [borrowed])
+
+  const checkBorrowedBook = () => {
+    const token = props.auth.data.tokenLogin;
+    const bookId = data.book_id;
+    const userId = props.auth.data.user_id;
+    
+    props.checkPendingHistory(token, bookId, userId)
+      .then((res) => {
+        let pendingHistories = false
+        res.value.data.data.length > 0
+          ? pendingHistories = true
+          : false
+        setBorrowed(pendingHistories)
+      }).catch((error) => {
+        console.log(error)
+        console.log(`get pendingHistories failed`)
+      })
+  }
+  const borrowBook = () => {
+    const token = props.auth.data.tokenLogin;
+    const bookId = data.book_id;
+    props.borrowBook(token, bookId)
+      .then((res) => {
+        if (res.value.status === 200) {
+          // getDetailBooks();
+          checkBorrowedBook();
+          alert('Borrow Book Success', 'Book borrowed successfully')
+        }
+      }).catch((error) => {
+        // console.log(error.response.data);
+        error.response.data.message
+          ? alert('Borrow Book Failed', error.response.data.message)
+          : alert('Borrow Book Failed', 'Please try again later')
+      })
+  }
+  const returnBook = () => {
+    const token = props.auth.data.tokenLogin;
+    const bookId = data.book_id;
+    props.returnBook(token, bookId)
+      .then((res) => {
+        if (res.value.status === 200) {
+          // getDetailBooks();
+          checkBorrowedBook();
+          alert('Return Book Success', 'Book returned successfully')
+        }
+      }).catch((error) => {
+        // console.log(error.response.data);
+        error.response.data.message
+          ? alert('Return Book Failed', error.response.data.message)
+          : alert('Return Book Failed', 'Please try again later')
+      })
+  }
   return (
     <>
       <View style={styles.container}>
@@ -15,24 +78,47 @@ const Detail = (props) => {
         <ScrollView>
           <View style={styles.content}>
             <View style={styles.image}>
-              <Image style={styles.bookImage} source={require('assets/images/default.png')} />
+              <Image style={styles.bookImage} source={{uri: data.image}} />
             </View>
-            <Text style={styles.title}>Lorem ipsum dolor sit amet</Text>
-            <Text style={styles.author}>Ipsum Amet</Text>
-            <Text style={styles.description}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius quo atque debitis voluptatum in porro ipsum esse aliquam accusantium. Sit eos officia eveniet facilis ex, fugit ad provident veniam velit!Id ipsam nisi repellat ex ad exercitationem pariatur a possimus illo! Aut itaque debitis atque velit inventore suscipit! Quisquam eveniet ut sit, minima eum laborum totam ex impedit quidem autem?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius quo atque debitis voluptatum in porro ipsum esse aliquam accusantium. Sit eos officia eveniet facilis ex, fugit ad provident veniam velit!Id ipsam nisi repellat ex ad exercitationem pariatur a possimus illo! Aut itaque debitis atque velit inventore suscipit! Quisquam eveniet ut sit, minima eum laborum totam ex impedit quidem autem?
-            </Text>
-
-            
+            <Text style={styles.title}>{data.title}</Text>
+            <Text style={styles.author}>{data.author_name}</Text>
+            <Text style={styles.description}>{data.description}</Text>
           </View>
         </ScrollView>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Borrow</Text>
-        </TouchableOpacity>
+        {
+          borrowed ? (
+            <>
+              <TouchableOpacity 
+              style={styles.button2}
+              onPress={() => returnBook()}
+              >
+                <Text style={styles.buttonText}>Return</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
+              <TouchableOpacity
+               style={styles.button}
+               onPress={() => borrowBook()}
+               >
+                <Text style={styles.buttonText}>Borrow</Text>
+              </TouchableOpacity>
+            </>
+          )
+        }
       </View>
     </>
   )
 }
 
-export default Detail;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+const mapDispatchToProps = {
+  checkPendingHistory,
+  borrowBook,
+  returnBook 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);

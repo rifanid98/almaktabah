@@ -98,7 +98,6 @@ const mainStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: 'orange',
     borderRadius: 100,
     overflow: 'hidden'
   },

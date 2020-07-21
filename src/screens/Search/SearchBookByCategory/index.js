@@ -1,9 +1,14 @@
-import React from 'react'
-import { View, ScrollView } from 'react-native'
-import { ScreenHeader, ScreenFilter, ScreenGridItems, GenresList } from 'components'
+import React, { useEffect, useState } from 'react'
+import { View, ScrollView, Text } from 'react-native'
+import { ScreenHeader, ScreenFilter, ScreenGridItems, GenresList, NotFound, Errors, Success } from 'components'
 import { searchStyles as styles } from 'assets/styles'
+import { connect } from 'react-redux'
+import { createUrlParamFromObj, alert } from 'utils'
+import { getBooks } from 'modules'
 
 const SearchBookByCategory = (props) => {
+  const [books, setBooks] = useState([])
+  const genresData = props.route.params.data
   const filterItems = {
     sortType: {
       asc: 'A-Z',
@@ -13,80 +18,65 @@ const SearchBookByCategory = (props) => {
       date: 'newest'
     }
   }
-  const genresData = [
-    {
-      genre_id: 1,
-      genre_name: 'Genre 1'
-    },
-    {
-      genre_id: 2,
-      genre_name: 'Genre 2'
-    },
-    {
-      genre_id: 3,
-      genre_name: 'Genre 3'
-    },
-    {
-      genre_id: 4,
-      genre_name: 'Genre 4'
-    },
-    {
-      genre_id: 1,
-      genre_name: 'Genre 1'
-    },
-    {
-      genre_id: 2,
-      genre_name: 'Genre 2'
-    },
-    {
-      genre_id: 3,
-      genre_name: 'Genre 3'
-    },
-    {
-      genre_id: 4,
-      genre_name: 'Genre 4'
-    },
-  ]
-  const booksData = [
-    {
-      book_id: 1,
-      title: 'Book 1',
-      author_name: 'Author 1',
-      genre_name: 'Genre 1'
-    },
-    {
-      book_id: 2,
-      title: 'Book 2',
-      author_name: 'Author 2',
-      genre_name: 'Genre 2'
-    },
-    {
-      book_id: 3,
-      title: 'Book 3',
-      author_name: 'Author 3',
-      genre_name: 'Genre 3'
-    },
-    {
-      book_id: 4,
-      title: 'Book 4',
-      author_name: 'Author 4',
-      genre_name: 'Genre 4'
-    },
-  ]
+  // get data when user choosed one category from home screen
+  useEffect(() => {
+    getBookByCategory(props.route.params.name)
+  }, [])
+
+  const getBookByCategory = (categoryName) => {
+    const categories = { genre: categoryName };
+    const params = createUrlParamFromObj(categories);
+    const token = props.auth.data.tokenLogin;
+    token
+      // ? props.getBooks(token)
+      ? props.getBooks(token, params)
+        .then((res) => {
+          
+        }).catch((error) => {
+          console.log(error, `get books by genre (category) failed`)
+        })
+      : alert('Token Failed', 'Cannot find token...')
+  }
   return (
     <>
       <View style={styles.container}>
         <ScreenHeader navigation={props.navigation} title="Categories" />
         <View style={styles.categoriesItems}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollView}>
-            <GenresList navigation={props.navigation} genresData={genresData} />
+            <GenresList navigation={props.navigation} genresData={genresData} onPress={(genreName) => getBookByCategory(genreName)}/>
           </ScrollView>
         </View>
         <ScreenFilter filterItems={filterItems} />
-        <ScreenGridItems navigation={props.navigation} booksData={booksData} />
+        {
+          props.books.data.result === undefined
+            ? props.books.data === undefined
+              ? <NotFound />
+              : (
+                <ScreenGridItems
+                  navigation={props.navigation}
+                  booksData={props.books.data}
+                />
+              )
+            : (
+              <ScreenGridItems
+                navigation={props.navigation}
+                booksData={props.books.data.result}
+              />
+            )
+        }
+        {props.books.data.isLoading && <Text style={{  justifyContent: 'flex-start', marginTop: 10, textAlign: 'center', backgroundColor: 'white' }}>Loading...</Text> }
       </View>
     </>
   )
 }
 
-export default SearchBookByCategory;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  books: state.books
+})
+
+const mapDispatchToProps = {
+  getBooks
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBookByCategory);

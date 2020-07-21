@@ -1,30 +1,17 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { ListItems } from 'components'
+import React, { useEffect } from 'react'
+import { View, Text, Alert } from 'react-native'
+import { ListItems, FixedAddButton } from 'components'
 import { managerStyles as manager, moleculesStyles as molecules } from 'assets/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { getDataById } from 'utils'
+import { getDataById, createUrlParamFromObj, alert } from 'utils'
+import { connect } from 'react-redux'
+import { getGenres, deleteGenre } from 'modules'
 
 const GenresManager = (props) => {
-  const genresData = [
-    {
-      genre_id: 1,
-      name: 'Genre 1',
-    },
-    {
-      genre_id: 2,
-      name: 'Genre 2',
-    },
-    {
-      genre_id: 3,
-      name: 'Genre 3',
-    },
-    {
-      genre_id: 4,
-      name: 'Genre 4',
-    },
-  ]
+  useEffect(() => {
+    getGenres()
+  }, [])
   
   const getData = (datas) => {
     let collection = []
@@ -60,7 +47,10 @@ const GenresManager = (props) => {
             <FontAwesomeIcon style={molecules.listItemActionIconNoImage} icon={faEdit} />
             Edit
           </Text>
-          <Text style={[molecules.listItemDeleteNoImage, molecules.listItemActionItemNoImage]}>
+          <Text
+            style={[molecules.listItemDeleteNoImage, molecules.listItemActionItemNoImage]}
+            onPress={() => deleteGenre(item.genre_id)}
+          >
             <FontAwesomeIcon style={molecules.listItemActionIconNoImage} icon={faTrashAlt} />
             Delete
           </Text>
@@ -70,14 +60,74 @@ const GenresManager = (props) => {
   }
 
   const showModal = (genreId) => {
-    props.navigation.navigate('modal', { screen: 'genre', data: getDataById(genresData, 'genre_id', genreId) })
+    props.navigation.navigate('modal', { screen: 'genre', data: getDataById(props.genres.data, 'genre_id', genreId) })
   }
 
+  const getGenres = () => {
+    const pagination = {
+      page: 1,
+      limit: 10
+    }
+    const params = createUrlParamFromObj(pagination);
+    const token = props.auth.data.tokenLogin;
+    token
+      ? props.getGenres(token, params)
+        .then((res) => {
+
+        }).catch((error) => {
+          console.log(`get genres failed`)
+        })
+      : alert('Token Failed', 'Cannot find token...')
+  }
+  const deleteGenre = (genreId) => {
+    const token = props.auth.data.tokenLogin;
+    Alert.alert(
+      "Delete this genre ?",
+      "This action cannot be undone!",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK", onPress: () => {
+            props.deleteGenre(token, genreId)
+              .then((res) => {
+                if (res.value.status === 200) {
+                  alert('Success', 'Genre deleted successfully')
+                  getGenres()
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                error.response.data.message
+                  ? alert('Failed', error.response.data.message)
+                  : alert('Failed', 'Delete Genre Failed. Please try again later')
+              }) 
+        } }
+      ],
+      { cancelable: false }
+    );
+  }
   return (
     <>
-      <ListItems data={getData(genresData)} layout="listItemNoImage" />
+      <View style={{ flex: 1, paddingTop: 10, backgroundColor: 'white'}}>
+        <ListItems data={getData(props.genres.data)} layout="listItemNoImage" />
+        <FixedAddButton />
+      </View>
     </>
   )
 }
 
-export default GenresManager;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  genres: state.genres
+})
+
+const mapDispatchToProps = {
+  getGenres,
+  deleteGenre
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GenresManager);

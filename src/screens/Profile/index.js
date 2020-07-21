@@ -1,12 +1,12 @@
 import React from 'react'
 import { Text, View, Image, Button } from 'react-native'
 import { useForm, Controller } from 'react-hook-form';
-// import Button from 'react-native-button'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { TouchableOpacity, ScrollView, TextInput } from 'react-native-gesture-handler';
+import {  ScrollView, TextInput } from 'react-native-gesture-handler';
 import { ScreenHeader } from 'components';
 import { profileStyles as styles } from 'assets/styles'
+import { connect } from 'react-redux';
+import { getRole } from 'utils';
+import { logout } from 'modules';
 
 const Profile = (props) => {
   const { control, handleSubmit, errors } = useForm();
@@ -18,16 +18,19 @@ const Profile = (props) => {
           <ScreenHeader navigation={props.navigation} title="Profile" />
           <View style={styles.header}>
             <View style={styles.profileImage}>
-              <Image style={styles.image} source={require('assets/images/avatar.png')} />
+              <Image style={styles.image} source={{uri: props.auth.data.image}} />
             </View>
             <View style={styles.profileInfo}>
-              <Text style={styles.name}>Admin Ganteng</Text>
-              <Text style={styles.email}>admin@ganteng.com</Text>
-              <Text style={styles.role}>admin</Text>
+              <Text style={styles.name}>{props.auth.data.username}</Text>
+              <Text style={styles.email}>{props.auth.data.email}</Text>
+              <Text style={styles.role}>{getRole(props.auth.data.role)}</Text>
             </View>
           </View>
           <View style={styles.edit}>
-            <Text style={styles.text}>Edit</Text>
+            <Text
+              style={styles.text}
+              onPress={() => props.logout()}
+            >Logout</Text>
           </View>
           <View style={styles.content}>
             <View style={styles.formControl}>
@@ -100,4 +103,12 @@ const Profile = (props) => {
   )
 }
 
-export default Profile;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const mapDispatchToProps = {
+  logout
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

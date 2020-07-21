@@ -1,3 +1,4 @@
+import { ACTIVE_THEME } from '@env';
 const colors = {
   primary: {
     primary: '#FFFFFF',
@@ -11,7 +12,11 @@ const colors = {
   secondary: {
     primary: '#5b3c19',
     secondary: '#f2ede6',
-    accent: '#738713'
+    accent: '#738713',
+    font: {
+      primary: '#FFFFFF',
+      secondary: '#FFFFFF'
+    }
   }
 }
 const activeColorScheme = 'primary';

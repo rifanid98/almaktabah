@@ -29,3 +29,15 @@ export const getPendingHistories = (token, id = "") => {
   }
 }
 
+export const checkPendingHistory = (token, bookId, userId) => {
+  return {
+    type: actionType.GET_PENDING_HISTORIES,
+    payload: Axios({
+      method: 'GET',
+      url: `${apiUri.histories}/${bookId}/${userId}`,
+      headers: {
+        authorization: token
+      }
+    })
+  }
+}

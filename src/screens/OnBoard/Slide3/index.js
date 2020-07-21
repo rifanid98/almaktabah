@@ -10,7 +10,6 @@ import { firstRun } from 'modules'
 const Slide3 = (props) => {
   const disableFirstRun = () => {
     props.firstRun(false);
-    props.navigation.navigate('auth')
   }
   return (
     <>

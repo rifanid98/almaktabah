@@ -1,61 +1,38 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { ListItems } from 'components'
+import React, { useEffect } from 'react'
+import { View, Text, Alert } from 'react-native'
+import { ListItems, FixedAddButton } from 'components'
 import { managerStyles as manager, moleculesStyles as molecules } from 'assets/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { getDataById } from 'utils'
+import { getDataById, createUrlParamFromObj } from 'utils'
+import { connect } from 'react-redux'
+import { getBooks, deleteBook } from 'modules'
 
 const BooksManager = (props) => {
-  const booksData = [
-    {
-      book_id: 1,
-      title: 'Book 1',
-      author_name: 'Author 1',
-      genre_name: 'Genre 1',
-      image: 'http:///192.168.42.15:3000/libraryapp-api/images/2020-06-17T05:00:48.720ZHideaway.jpg'
-    },
-    {
-      book_id: 2,
-      title: 'Book 2',
-      author_name: 'Author 2',
-      genre_name: 'Genre 2',
-      image: 'http:///192.168.42.15:3000/libraryapp-api/images/2020-06-17T05:00:48.720ZHideaway.jpg'
-    },
-    {
-      book_id: 3,
-      title: 'Book 3',
-      author_name: 'Author 3',
-      genre_name: 'Genre 3',
-      image: 'http:///192.168.42.15:3000/libraryapp-api/images/2020-06-17T05:00:48.720ZHideaway.jpg'
-    },
-    {
-      book_id: 4,
-      title: 'Book 4',
-      author_name: 'Author 4',
-      genre_name: 'Genre 4',
-      image: 'http:///192.168.42.15:3000/libraryapp-api/images/2020-06-17T05:00:48.720ZHideaway.jpg'
-    },
-  ]
-
+  useEffect(() => {
+    getBooks()
+  }, [])
   const getData = (datas) => {
     let collection = []
 
     // Interface Setter
-    datas.map((data, index) => {
-      collection.push({
-        image: getItemImage(data),
-        info: getItemInfo(data)
-      })
-    })
+
+    datas
+      ? datas.length > 0
+        ? datas.map((data, index) => {
+          collection.push({
+            image: getItemImage(data),
+            info: getItemInfo(data)
+          })
+        })
+        : []
+      : []
     
     return collection;
   }
-  
   const getItemImage = (item) => {
     return item.image
   }
-
   const getItemInfo = (item) => {
     return (
       <>
@@ -71,7 +48,10 @@ const BooksManager = (props) => {
             <FontAwesomeIcon style={molecules.listItemActionIcon} icon={faEdit} />
             Edit
           </Text>
-          <Text style={[molecules.listItemDelete, molecules.listItemActionItem]}>
+          <Text
+            style={[molecules.listItemDelete, molecules.listItemActionItem]}
+            onPress={() => deleteBook(item.book_id)}
+          >
             <FontAwesomeIcon style={molecules.listItemActionIcon} icon={faTrashAlt} />
             Delete
           </Text>
@@ -81,14 +61,77 @@ const BooksManager = (props) => {
   }
 
   const showModal = (bookId) => {
-    props.navigation.navigate('modal', { screen: 'book', data: getDataById(booksData, 'book_id', bookId) })
+    props.navigation.navigate('modal', { screen: 'book', data: getDataById(props.books.data.result, 'book_id', bookId) })
   }
   
+  const getBooks = () => {
+    const pagination = {
+      page: 1,
+      limit: 10
+    }
+    const params = createUrlParamFromObj(pagination);
+    const token = props.auth.data.tokenLogin;
+    token
+      ? props.getBooks(token, params)
+        .then((res) => {
+          
+        }).catch((error) => {
+          console.log(`get books failed`)
+        })
+      : alert('Token Failed', 'Cannot find token...')
+  }
+  const deleteBook = (bookId) => {
+    const token = props.auth.data.tokenLogin;
+    Alert.alert(
+      "Delete this book ?",
+      "This action cannot be undone!",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK", onPress: () => {
+            props.deleteBook(token, bookId)
+              .then((res) => {
+                alert('Delete Success', 'Book Deleted Successfully')
+                getBooks()
+              }).catch((error) => {
+                console.log(error);
+                error.response.data.message
+                  ? alert('Failed', error.response.data.message)
+                  : alert('Failed', 'Delete Genre Failed. Please try again later')
+              })
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  }
   return (
     <>
-      <ListItems data={getData(booksData)} layout="listItemWithImage" />
+      <View style={{
+        // flex: 1,
+        paddingTop: 10,
+        backgroundColor: 'white',
+        position: 'relative'
+      }}>
+        <ListItems data={getData(props.books.data.result)} layout="listItemWithImage" />
+        <FixedAddButton />
+      </View>
     </>
   )
 }
 
-export default BooksManager;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  books: state.books
+})
+
+const mapDispatchToProps = {
+  getBooks,
+  deleteBook
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BooksManager);
