@@ -1,11 +1,11 @@
-import BookModalBody from './BookModalBody'
-import GenreModalBody from './GenreModalBody'
-import AuthorModalBody from './AuthorModalBody'
-import UserModalBody from './UserModalBody'
+import BookEditModalBody from './BookEditModalBody'
+import GenreEditModalBody from './GenreEditModalBody'
+import AuthorEditModalBody from './AuthorEditModalBody'
+import UserEditModalBody from './UserEditModalBody'
 
 export {
-  BookModalBody,
-  GenreModalBody,
-  AuthorModalBody,
-  UserModalBody
+  BookEditModalBody,
+  GenreEditModalBody,
+  AuthorEditModalBody,
+  UserEditModalBody
 }

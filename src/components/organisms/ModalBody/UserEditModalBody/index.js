@@ -2,26 +2,67 @@ import React, { useState } from 'react';
 import { Text, View, TextInput, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Picker } from '@react-native-community/picker';
+import { connect } from 'react-redux';
+import { getUsers, patchUser } from 'modules';
+import { createUrlParamFromObj, alert } from 'utils';
 
 import { managerStyles as styles, colorScheme as color} from "assets/styles";
 
-const UserModalBody = (props) => {
+const UserEditModalBody = (props) => {
   const [role, setRole] = useState(props.data.role)
-  const image = { uri: 'http://192.168.42.15:3000/libraryapp-api/images/2020-06-17T05:00:48.720ZHideaway.jpg'}
 
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = data => {
     data.role = role
     // data.image hanlde later OK?!
-    console.log(data);
+    updateUser(data)
   }
-  
+  const getUsers = () => {
+    const pagination = {
+      page: 1,
+      limit: 10
+    }
+    const params = createUrlParamFromObj(pagination);
+    const token = props.auth.data.tokenLogin;
+    token
+      ? props.getUsers(token)
+        .then((res) => {
+
+        }).catch((error) => {
+          console.log(`get users failed`)
+        })
+      : alert('Token Failed', 'Cannot find token...')
+  }
+  const updateUser = (data) => {
+    const token = props.auth.data.tokenLogin;
+    const formData = new FormData();
+    const user_id = props.data.user_id;
+    if (data.username !== props.data.username) formData.append('username', data.username)
+    formData.append('full_name', data.full_name)
+    formData.append('email', data.email)
+    formData.append('role', data.role)
+    if (data.password !== null && data.password.length > 0 && data.password !== undefined) formData.append('password', data.password)
+    
+    props.patchUser(token, formData, user_id)
+      .then((res) => {
+        if (res.value.status === 200) {
+          alert('Success', 'User updated successfully')
+          getUsers()
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        error.response.data.message
+          ? alert('Failed', error.response.data.message)
+          : alert('Failed', 'Update User Failed. Pleas try again later')
+      })
+  }
   return (
     <View style={styles.container}>
       <ScrollView>
         <TouchableOpacity style={styles.formImage} onPress={() => console.log('touched')}>
-          <ImageBackground source={image} style={styles.image}></ImageBackground>
+          <ImageBackground source={{uri: props.data.image}} style={styles.image}></ImageBackground>
           <Text style={{ textAlign: 'center' }}>Touch to upload an image</Text>
         </TouchableOpacity>
         
@@ -34,7 +75,7 @@ const UserModalBody = (props) => {
             value={value}
           />
         )}
-          name="username" rules={{}} defaultValue={props.data.name}
+          name="username" rules={{}} defaultValue={props.data.username}
         />
 
         <Text style={styles.label}>Full Name</Text>
@@ -92,4 +133,13 @@ const UserModalBody = (props) => {
   );
 }
 
-export default UserModalBody
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+const mapDispatchToProps = {
+  getUsers,
+  patchUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserEditModalBody)
