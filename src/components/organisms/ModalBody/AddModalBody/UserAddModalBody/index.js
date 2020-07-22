@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TextInput, ImageBackground, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Picker } from '@react-native-community/picker';
 import { connect } from 'react-redux';
-import { getUsers, patchUser } from 'modules';
-import { createUrlParamFromObj, alert } from 'utils';
+import { getUsers, addUser } from 'modules';
+import { alert, createUrlParamFromObj, createImageFormData } from 'utils';
+import ImagePicker from 'react-native-image-picker'
 
 import { managerStyles as styles, colorScheme as color} from "assets/styles";
 
-const UserEditModalBody = (props) => {
-  const [role, setRole] = useState(props.data.role)
+const UserAddModalBody = (props) => {
+  const [role, setRole] = useState(3)
+  const [defaultImage] = useState(require('assets/images/default.png'))
+  const [image, setImage] = useState(null)
 
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = data => {
     data.role = role
     // data.image hanlde later OK?!
-    updateUser(data)
+    addUser(data)
+  }
+  const handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.uri) {
+        setImage(response)
+      }
+    })
   }
   const getUsers = () => {
     const pagination = {
@@ -26,7 +39,7 @@ const UserEditModalBody = (props) => {
     const params = createUrlParamFromObj(pagination);
     const token = props.auth.data.tokenLogin;
     token
-      ? props.getUsers(token)
+      ? props.getUsers(token, params)
         .then((res) => {
 
         }).catch((error) => {
@@ -34,20 +47,13 @@ const UserEditModalBody = (props) => {
         })
       : alert('Token Failed', 'Cannot find token...')
   }
-  const updateUser = (data) => {
+  const addUser = (data) => {
     const token = props.auth.data.tokenLogin;
-    const formData = new FormData();
-    const user_id = props.data.user_id;
-    if (data.username !== props.data.username) formData.append('username', data.username)
-    formData.append('full_name', data.full_name)
-    formData.append('email', data.email)
-    formData.append('role', data.role)
-    if (data.password !== null && data.password.length > 0 && data.password !== undefined) formData.append('password', data.password)
-    
-    props.patchUser(token, formData, user_id)
+    const formData = createImageFormData(data, image, 'image')
+    props.addUser(token, formData)
       .then((res) => {
-        if (res.value.status === 200) {
-          alert('Success', 'User updated successfully')
+        if (res.value.status === 201) {
+          Alert.alert('Success', 'User added successfully')
           getUsers()
         }
       })
@@ -55,14 +61,19 @@ const UserEditModalBody = (props) => {
         console.log(error);
         error.response.data.message
           ? alert('Failed', error.response.data.message)
-          : alert('Failed', 'Update User Failed. Pleas try again later')
+          : alert('Failed', 'Add User Failed. Pleas try again later')
       })
   }
+
   return (
     <View style={styles.container}>
       <ScrollView>
-        <TouchableOpacity style={styles.formImage} onPress={() => console.log('touched')}>
-          <ImageBackground source={{uri: props.data.image}} style={styles.image}></ImageBackground>
+        <TouchableOpacity style={styles.formImage} onPress={() => handleChoosePhoto()}>
+          {
+            image
+              ? <Image source={{ uri: image.uri }} style={styles.image} />
+              : <ImageBackground source={defaultImage} style={styles.image}></ImageBackground>
+          }
           <Text style={{ textAlign: 'center' }}>Touch to upload an image</Text>
         </TouchableOpacity>
         
@@ -70,36 +81,39 @@ const UserEditModalBody = (props) => {
         <Controller control={control} render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
+            placeholder={errors.username && 'This is required'}
             onBlur={onBlur}
             onChangeText={value => onChange(value)}
             value={value}
           />
         )}
-          name="username" rules={{}} defaultValue={props.data.username}
+          name="username" rules={{required: true}} defaultValue=""
         />
 
         <Text style={styles.label}>Full Name</Text>
         <Controller control={control} render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
+            placeholder={errors.full_name && 'This is required'}
             onBlur={onBlur}
             onChangeText={value => onChange(value)}
             value={value}
           />
         )}
-          name="full_name" rules={{}} defaultValue={props.data.full_name}
+          name="full_name" rules={{required: true}} defaultValue=""
         />
 
         <Text style={styles.label}>Email</Text>
         <Controller control={control} render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
+            placeholder={errors.email && 'This is required'}
             onBlur={onBlur}
             onChangeText={value => onChange(value)}
             value={value}
           />
         )}
-          name="email" rules={{}} defaultValue={props.data.email}
+          name="email" rules={{required: true}} defaultValue=""
         />
 
         <Text style={styles.label}>Role</Text>
@@ -116,13 +130,14 @@ const UserEditModalBody = (props) => {
         <Controller control={control} render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
+            placeholder={errors.password && 'This is required'}
             onBlur={onBlur}
             onChangeText={value => onChange(value)}
             value={value}
             secureTextEntry={true}
           />
         )}
-          name="password" rules={{}} defaultValue=""
+          name="password" rules={{required: true}} defaultValue=""
         />
 
       </ScrollView>
@@ -139,7 +154,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getUsers,
-  patchUser
+  addUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserEditModalBody)
+export default connect(mapStateToProps, mapDispatchToProps)(UserAddModalBody)

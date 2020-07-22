@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TextInput, ScrollView } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { managerStyles as styles, colorScheme as color} from "assets/styles";
 import { connect } from 'react-redux';
-import { getGenres, patchGenre } from 'modules';
+import { getAuthors, patchAuthor } from 'modules';
 import { createUrlParamFromObj, alert } from 'utils';
 
-const GenreEditModalBody = (props) => {
+import { managerStyles as styles, colorScheme as color} from "assets/styles";
+
+const AuthorAddModalBody = (props) => {
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = data => {
-    updateGenre(data)
+    updateAuthor(data)
   }
-  const getGenres = () => {
+  const getAuthors = () => {
     const pagination = {
       page: 1,
       limit: 10
@@ -20,32 +21,32 @@ const GenreEditModalBody = (props) => {
     const params = createUrlParamFromObj(pagination);
     const token = props.auth.data.tokenLogin;
     token
-      ? props.getGenres(token, params)
+      ? props.getAuthors(token, params)
         .then((res) => {
 
         }).catch((error) => {
-          console.log(`get genres failed`)
+          console.log(`get authors failed`)
         })
       : alert('Token Failed', 'Cannot find token...')
   }
-  const updateGenre = (data) => {
+  const updateAuthor = (data) => {
     const token = props.auth.data.tokenLogin;
-    const genreId = props.data.genre_id;
+    const authorId = props.data.author_id;
     if (data.name !== props.data.name) {
       const formData = new FormData();
       formData.append('name', data.name)
-      props.patchGenre(token, formData, genreId)
+      props.patchAuthor(token, formData, authorId)
         .then((res) => {
           if (res.value.status === 200) {
-            alert('Success', 'Genre updated successfully')
-            getGenres()
+            alert('Success', 'Author updated successfully')
+            getAuthors()
           }
         })
         .catch((error) => {
           console.log(error);
           error.response.data.message
             ? alert('Failed', error.response.data.message)
-            : alert('Failed', 'Update Genre Failed. Please try again later')
+            : alert('Failed', 'Update Author Failed. Please try again later')
         })
     } else {
       alert('No Change', 'Please type new one')
@@ -54,7 +55,7 @@ const GenreEditModalBody = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Text style={styles.label}>Genre Name</Text>
+        <Text style={styles.label}>Author Name</Text>
         <Controller control={control} render={({ onChange, onBlur, value }) => (
           <TextInput
             style={styles.input}
@@ -68,10 +69,7 @@ const GenreEditModalBody = (props) => {
 
       </ScrollView>
       <View style={{ height: 60 }}>
-        <Text
-          style={styles.button}
-          onPress={handleSubmit(onSubmit)}
-        >Save</Text>
+        <Text style={styles.button} onPress={handleSubmit(onSubmit)}>Save</Text>
       </View>
     </View>
   );
@@ -82,8 +80,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  getGenres,
-  patchGenre
+  getAuthors,
+  patchAuthor
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GenreEditModalBody)
+export default connect(mapStateToProps, mapDispatchToProps)(AuthorAddModalBody)
