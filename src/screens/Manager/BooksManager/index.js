@@ -43,7 +43,7 @@ const BooksManager = (props) => {
         <View style={molecules.listItemAction}>
           <Text
             style={[molecules.listItemEdit, molecules.listItemActionItem]}
-            onPress={() => showModal(item.book_id)}
+            onPress={() => showEditModal(item.book_id)}
           >
             <FontAwesomeIcon style={molecules.listItemActionIcon} icon={faEdit} />
             Edit
@@ -60,8 +60,12 @@ const BooksManager = (props) => {
     )
   }
 
-  const showModal = (bookId) => {
-    props.navigation.navigate('modal', { screen: 'book', data: getDataById(props.books.data.result, 'book_id', bookId) })
+  const showEditModal = (bookId) => {
+    props.navigation.navigate('modal', { screen: 'book', type: 'edit', data: getDataById(props.books.data.result, 'book_id', bookId) })
+  }
+
+  const showAddModal = () => {
+    props.navigation.navigate('modal', { screen: 'book', type: 'add' })
   }
   
   const getBooks = () => {
@@ -112,13 +116,12 @@ const BooksManager = (props) => {
   return (
     <>
       <View style={{
-        // flex: 1,
         paddingTop: 10,
         backgroundColor: 'white',
         position: 'relative'
       }}>
         <ListItems data={getData(props.books.data.result)} layout="listItemWithImage" />
-        <FixedAddButton />
+        <FixedAddButton onPress={() => showAddModal()}/>
       </View>
     </>
   )

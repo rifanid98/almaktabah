@@ -12,40 +12,6 @@ const UsersManager = (props) => {
   useEffect(() => {
     getUsers()
   }, [])
-  const usersData = [
-    {
-      user_id: 1,
-      name: 'User 1',
-      full_name: 'User Panjang',
-      email: 'email@user.com',
-      image: 'image url',
-      role: 1
-    },
-    {
-      user_id: 2,
-      name: 'User 2',
-      full_name: 'User Panjang',
-      email: 'email@user.com',
-      image: 'image url',
-      role: 2
-    },
-    {
-      user_id: 3,
-      name: 'User 3',
-      full_name: 'User Panjang',
-      email: 'email@user.com',
-      image: 'image url',
-      role: 3
-    },
-    {
-      user_id: 4,
-      name: 'User 4',
-      full_name: 'User Panjang',
-      email: 'email@user.com',
-      image: 'image url',
-      role: 3
-    },
-  ]
   
   const getData = (datas) => {
     let collection = []
@@ -76,7 +42,7 @@ const UsersManager = (props) => {
         <View style={molecules.listItemAction}>
           <Text
             style={[molecules.listItemEdit, molecules.listItemActionItem]}
-            onPress={() => showModal(item.user_id)}
+            onPress={() => showEditModal(item.user_id)}
           >
             <FontAwesomeIcon style={molecules.listItemActionIcon} icon={faEdit} />
             Edit
@@ -93,10 +59,12 @@ const UsersManager = (props) => {
     )
   }
 
-  const showModal = (userId) => {
-    props.navigation.navigate('modal', { screen: 'user', data: getDataById(props.users.data, 'user_id', userId) })
+  const showEditModal = (userId) => {
+    props.navigation.navigate('modal', { screen: 'user', type: 'edit', data: getDataById(props.users.data, 'user_id', userId) })
   }
-
+  const showAddModal = () => {
+    props.navigation.navigate('modal', { screen: 'user', type: 'add' })
+  }
   const getUsers = () => {
     const pagination = {
       page: 1,
@@ -149,7 +117,7 @@ const UsersManager = (props) => {
     <>
       <View style={{ flex: 1, paddingTop: 10, backgroundColor: 'white' }}>
         <ListItems data={getData(props.users.data)} layout="listItemWithImage" />
-        <FixedAddButton />
+        <FixedAddButton onPress={() => showAddModal()}/>
       </View>
     </>
   )

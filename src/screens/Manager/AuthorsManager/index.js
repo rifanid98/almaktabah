@@ -62,7 +62,7 @@ const AuthorsManager = (props) => {
   }
 
   const showModal = (authorId) => {
-    props.navigation.navigate('modal', { screen: 'author', data: getDataById(props.authors.data, 'author_id', authorId) })
+    props.navigation.navigate('modal', { screen: 'author', type: 'edit', data: getDataById(props.authors.data, 'author_id', authorId) })
   }
 
   const getAuthors = () => {

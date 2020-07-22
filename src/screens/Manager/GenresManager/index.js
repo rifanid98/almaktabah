@@ -60,7 +60,7 @@ const GenresManager = (props) => {
   }
 
   const showModal = (genreId) => {
-    props.navigation.navigate('modal', { screen: 'genre', data: getDataById(props.genres.data, 'genre_id', genreId) })
+    props.navigation.navigate('modal', { screen: 'genre', type: 'edit', data: getDataById(props.genres.data, 'genre_id', genreId) })
   }
 
   const getGenres = () => {
