@@ -227,7 +227,7 @@ class Home extends Component {
                   this.state.books.map((book, index) => (
                     <SearchGridItem
                       key={index}
-                      bookId={book.book_id}
+                      book_id={book.book_id}
                       image={book.image}
                       title={book.title}
                       author_name={book.author_name}
