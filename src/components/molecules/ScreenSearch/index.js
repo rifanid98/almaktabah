@@ -10,7 +10,7 @@ const ScreenSearch = (props) => {
   const { control, handleSubmit } = useForm();
 
   const onSubmit = data => {
-    console.log(data)
+    props.onPress(data.search)
   }
   return (
     <>
