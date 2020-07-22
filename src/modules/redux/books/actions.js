@@ -36,6 +36,7 @@ export const addBook = (token, data) => {
       url: apiUri.books,
       data: data,
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'multipart/form-data',
         'authorization': token
       }
