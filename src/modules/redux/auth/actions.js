@@ -2,6 +2,12 @@ import actionType from './actionType';
 import Axios from 'axios';
 import { apiUri } from 'configs';
 
+export const setAuth = (data) => {
+  return {
+    type: actionType.SET_AUTH,
+    payload: data
+  }
+}
 export const login = (data) => {
   return {
     type: actionType.LOGIN,

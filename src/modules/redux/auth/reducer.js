@@ -9,7 +9,30 @@ const initialState = {
 
 
 const auth = (state = initialState, action) => {
+  console.log(action.payload, 'pau=yloadddddddd')
   switch (action.type) {
+    case actionType.SET_AUTH_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    case actionType.SET_AUTH_REJECTED:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: 'Data Rejected'
+      }
+    case actionType.SET_AUTH_FULFILLED:
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        errorMsg: '',
+        data: action.payload
+      }
+    
     case actionType.LOGIN_PENDING:
       return {
         ...state,
