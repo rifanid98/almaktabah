@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, Text, View } from 'react-native'
 import { font, colorScheme as color } from 'assets/styles'
 
-const NotFound = () => {
+const Empty = () => {
   return (
     <>
       <View style={{
@@ -12,20 +12,20 @@ const NotFound = () => {
         alignItems: 'center',
         backgroundColor: color.primary
       }}>
-        <Image source={require('assets/images/not_found.png')} />
+        <Image source={require('assets/images/empty.png')} />
         <Text style={{
           marginTop: 10,
           fontFamily: font.title,
-          fontSize: 55
-        }}>404</Text>
+          fontSize: 40
+        }}>Book not found</Text>
         <Text style={{
           marginTop: 10,
           fontFamily: font.title,
           fontSize: 23
-        }}>Not Found</Text>
+        }}>Try titles, genres & other authors</Text>
       </View>
     </>
   )
 }
 
-export default NotFound;
+export default Empty;

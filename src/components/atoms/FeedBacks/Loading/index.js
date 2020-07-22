@@ -16,7 +16,7 @@ const Loading = () => {
         <Text style={{
           marginTop: 10,
           fontFamily: font.title,
-          fontSize: 65
+          fontSize: 40
         }}>Loading...</Text>
         <Text style={{
           marginTop: 10,
