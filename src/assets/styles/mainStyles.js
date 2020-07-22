@@ -109,7 +109,7 @@ const mainStyles = StyleSheet.create({
   },
   profileImage: {
     height: 60, width: 60,
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
     borderRadius: 500
   },
   search: {
