@@ -62,6 +62,10 @@ const GenresManager = (props) => {
   const showModal = (genreId) => {
     props.navigation.navigate('modal', { screen: 'genre', type: 'edit', data: getDataById(props.genres.data, 'genre_id', genreId) })
   }
+  const showAddModal = () => {
+    props.navigation.navigate('modal', { screen: 'genre', type: 'add' })
+  }
+
 
   const getGenres = () => {
     const pagination = {
@@ -114,7 +118,7 @@ const GenresManager = (props) => {
     <>
       <View style={{ flex: 1, paddingTop: 10, backgroundColor: 'white'}}>
         <ListItems data={getData(props.genres.data)} layout="listItemNoImage" />
-        <FixedAddButton />
+        <FixedAddButton onPress={() => showAddModal()} />
       </View>
     </>
   )

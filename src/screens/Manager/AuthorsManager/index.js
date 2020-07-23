@@ -44,7 +44,7 @@ const AuthorsManager = (props) => {
         <View style={molecules.listItemActionNoImage}>
           <Text
             style={[molecules.listItemEditNoImage, molecules.listItemActionItemNoImage]}
-            onPress={() => showModal(item.author_id)}
+            onPress={() => showEditModal(item.author_id)}
           >
             <FontAwesomeIcon style={molecules.listItemActionIconNoImage} icon={faEdit} />
             Edit
@@ -61,9 +61,13 @@ const AuthorsManager = (props) => {
     )
   }
 
-  const showModal = (authorId) => {
+  const showEditModal = (authorId) => {
     props.navigation.navigate('modal', { screen: 'author', type: 'edit', data: getDataById(props.authors.data, 'author_id', authorId) })
   }
+  const showAddModal = () => {
+    props.navigation.navigate('modal', { screen: 'author', type: 'add' })
+  }
+
 
   const getAuthors = () => {
     const pagination = {
@@ -117,7 +121,7 @@ const AuthorsManager = (props) => {
     <>
       <View style={{ flex: 1, paddingTop: 10, backgroundColor: 'white'}}>
         <ListItems data={getData(props.authors.data)} layout="listItemNoImage" />
-        <FixedAddButton />
+        <FixedAddButton onPress={() => showAddModal()} />
       </View>
     </>
   )
