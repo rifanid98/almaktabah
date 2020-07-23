@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Text, View, TextInput, ScrollView } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { getAuthors, patchAuthor } from 'modules';
-import { createUrlParamFromObj, alert } from 'utils';
+import { getAuthors, addAuthor } from 'modules';
+import { createUrlParamFromObj, alert, createFormData } from 'utils';
 
 import { managerStyles as styles, colorScheme as color} from "assets/styles";
 
@@ -11,7 +11,7 @@ const AuthorAddModalBody = (props) => {
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = data => {
-    updateAuthor(data)
+    addAuthor(data)
   }
   const getAuthors = () => {
     const pagination = {
@@ -29,28 +29,22 @@ const AuthorAddModalBody = (props) => {
         })
       : alert('Token Failed', 'Cannot find token...')
   }
-  const updateAuthor = (data) => {
+  const addAuthor = (data) => {
     const token = props.auth.data.tokenLogin;
-    const authorId = props.data.author_id;
-    if (data.name !== props.data.name) {
-      const formData = new FormData();
-      formData.append('name', data.name)
-      props.patchAuthor(token, formData, authorId)
-        .then((res) => {
-          if (res.value.status === 200) {
-            alert('Success', 'Author updated successfully')
-            getAuthors()
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          error.response.data.message
-            ? alert('Failed', error.response.data.message)
-            : alert('Failed', 'Update Author Failed. Please try again later')
-        })
-    } else {
-      alert('No Change', 'Please type new one')
-    }
+    const formData = createFormData(data)
+    props.addAuthor(token, formData)
+      .then((res) => {
+        if (res.value.status === 201) {
+          alert('Success', 'Author added successfully')
+          getAuthors()
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        error.response.data.message
+          ? alert('Failed', error.response.data.message)
+          : alert('Failed', 'Add Author Failed. Please try again later')
+      })
   }
   return (
     <View style={styles.container}>
@@ -61,10 +55,11 @@ const AuthorAddModalBody = (props) => {
             style={styles.input}
             onBlur={onBlur}
             onChangeText={value => onChange(value)}
+            placeholder={errors.name && 'This is required'}
             value={value}
           />
         )}
-          name="name" rules={{}} defaultValue={props.data.name}
+          name="name" rules={{required: true}} defaultValue=""
         />
 
       </ScrollView>
@@ -81,7 +76,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getAuthors,
-  patchAuthor
+  addAuthor
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthorAddModalBody)
