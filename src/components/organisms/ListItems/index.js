@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { organismsStyles as styles} from 'assets/styles';
 import { ListItem } from 'components/molecules';
-import { NotFound } from 'components/atoms';
+import { Empty } from 'components/atoms';
 
 const ListItems = (props) => {
   const datas = props.data
@@ -22,8 +22,8 @@ const ListItems = (props) => {
                     layout={props.layout}
                   />
                 ))
-                : <NotFound />
-              : <NotFound />
+                : <Empty />
+              : <Empty />
           }
         </View>
       </ScrollView>

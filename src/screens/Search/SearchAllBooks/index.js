@@ -23,6 +23,7 @@ const SearchAllBooks = (props) => {
   }, [props.books])
 
   const getBooksByKeyword = (keyword) => {
+    if (keyword.length < 5) return;
     setSearch(true)
     const search = {
       author: keyword,
@@ -45,6 +46,7 @@ const SearchAllBooks = (props) => {
         })
     }
   }
+  
   return (
     <>
       <View style={styles.container}>

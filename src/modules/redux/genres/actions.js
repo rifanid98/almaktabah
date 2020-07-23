@@ -59,7 +59,7 @@ export const addGenre = (token, data) => {
     type: actionType.ADD_GENRE,
     payload: Axios({
       method: 'POST',
-      url: apiUri.genres,
+      url: apiUri.genres.all,
       data: data,
       headers: {
         'Content-Type': 'multipart/form-data',

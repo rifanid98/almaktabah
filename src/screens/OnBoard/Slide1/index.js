@@ -18,7 +18,7 @@ const Slide1 = (props) => {
             style={{
               height: 300, width: 400,
               resizeMode: 'stretch',}}
-            source={require('assets/images/reading_book.png')} />
+            source={require('assets/images/reading_book.png')} resizeMethod="resize" />
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>Books is life</Text>

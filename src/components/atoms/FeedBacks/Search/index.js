@@ -12,7 +12,7 @@ const Search = () => {
         alignItems: 'center',
         backgroundColor: color.primary
       }}>
-        <Image source={require('assets/images/search.png')} />
+        <Image source={require('assets/images/search.png')} resizeMethod="resize" />
         <Text style={{
           marginTop: 10,
           fontFamily: font.title,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, TextInput, Button, ImageBackground, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, Button, TouchableOpacity, Image } from 'react-native';
 import {useForm} from 'react-hook-form';
 import { RHFInput } from "react-hook-form-input";
 import { managerStyles as styles } from "assets/styles";
@@ -16,7 +16,7 @@ const ModalBody = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.formImage} onPress={() => console.log('touched')}>
-        <ImageBackground source={image} style={styles.image}></ImageBackground>
+        <Image source={image} style={styles.image} resizeMethod="resize" />
         <Text style={{textAlign: 'center'}}>Touch to upload an image</Text>
       </TouchableOpacity>
       <Text style={styles.label}>Username</Text>

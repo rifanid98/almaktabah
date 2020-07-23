@@ -106,8 +106,8 @@ const BookEditModalBody = (props) => {
         <TouchableOpacity style={styles.formImage} onPress={() => handleChoosePhoto()}>
           {
             image
-              ? <Image source={{ uri: image.uri }} style={styles.image} />
-              : <ImageBackground source={{ uri: props.data.image }} style={styles.image}></ImageBackground>
+              ? <Image source={{ uri: image.uri }} style={styles.image} resizeMethod="resize" />
+              : <Image source={{ uri: props.data.image }} style={styles.image} resizeMethod="resize" />
           }
           <Text style={{ textAlign: 'center' }}>Touch to upload an image</Text>
         </TouchableOpacity>

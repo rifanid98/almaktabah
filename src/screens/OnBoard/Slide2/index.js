@@ -19,7 +19,7 @@ const Slide2 = (props) => {
               height: 300, width: 400,
               resizeMode: 'stretch',
             }}
-            source={require('assets/images/connected.png')} />
+            source={require('assets/images/connected.png')} resizeMethod="resize" />
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>Gate of The World</Text>

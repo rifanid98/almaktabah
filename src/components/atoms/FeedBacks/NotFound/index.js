@@ -12,7 +12,7 @@ const NotFound = () => {
         alignItems: 'center',
         backgroundColor: color.primary
       }}>
-        <Image source={require('assets/images/not_found.png')} />
+        <Image source={require('assets/images/not_found.png')} resizeMethod="resize" />
         <Text style={{
           marginTop: 10,
           fontFamily: font.title,

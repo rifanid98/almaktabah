@@ -12,7 +12,7 @@ const Errors = () => {
         alignItems: 'center',
         backgroundColor: color.primary
       }}>
-        <Image source={require('assets/images/error.png')} />
+        <Image source={require('assets/images/error.png')} resizeMethod="resize" />
         <Text style={{
           marginTop: 10,
           fontFamily: font.title,

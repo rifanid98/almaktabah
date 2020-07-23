@@ -78,7 +78,7 @@ const Detail = (props) => {
         <ScrollView>
           <View style={styles.content}>
             <View style={styles.image}>
-              <Image style={styles.bookImage} source={{uri: data.image}} />
+              <Image style={styles.bookImage} source={{ uri: data.image }} resizeMethod="resize" />
             </View>
             <Text style={styles.title}>{data.title}</Text>
             <Text style={styles.author}>{data.author_name}</Text>

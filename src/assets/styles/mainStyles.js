@@ -38,6 +38,7 @@ const item = {
  */
 const mainStyles = StyleSheet.create({
   container: {
+    position: 'relative',
     backgroundColor: color.primary,
   },
   /**
@@ -85,10 +86,12 @@ const mainStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: 20
   },
   adminIcon: {
-    padding: 20
+    padding: 20,
+    width: 20
   },
 
   // Profile

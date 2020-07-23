@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ImageBackground } from 'react-native'
+import { View, Image } from 'react-native'
 import { moleculesStyles as styles } from 'assets/styles';
 
 const ListItemWithImage = (props) => {
@@ -7,7 +7,7 @@ const ListItemWithImage = (props) => {
   return (
     <>
       <View style={styles.listItem} >
-        <ImageBackground source={image} style={styles.listItemImage}></ImageBackground>
+        <Image source={image} style={styles.listItemImage} resizeMethod="resize" />
         <View style={styles.itemInfo}>
           {props.info}
         </View>

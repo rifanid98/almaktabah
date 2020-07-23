@@ -95,8 +95,8 @@ const Profile = (props) => {
             <TouchableOpacity style={styles.profileImage} onPress={() => handleChoosePhoto()}>
               {
                 image
-                  ? <Image source={{ uri: image.uri }} style={styles.image} />
-                  : <Image style={styles.image} source={{ uri: props.auth.data.image }} />
+                  ? <Image source={{ uri: image.uri }} style={styles.image} resizeMethod="resize" />
+                  : <Image style={styles.image} source={{ uri: props.auth.data.image }} resizeMethod="resize" />
               }
             </TouchableOpacity>
             <View style={styles.profileInfo}>

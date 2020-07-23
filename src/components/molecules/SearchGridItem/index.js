@@ -13,7 +13,7 @@ const SearchGridItem = (props) => {
       <TouchableOpacity
         style={styles.gridItem}
         onPress={() => goToDetailBook(props)}>
-        <Image style={styles.bookImage} source={image} />
+        <Image style={styles.bookImage} source={image} resizeMethod="resize"/>
         <View style={styles.bookInfo}>
           <Text style={styles.title}>{props.title.length > 14 ? `${props.title.substring(0, 14)}...` : `${props.title}`}</Text>
           <Text style={styles.author}>{props.author_name.length > 14 ? `${props.author_name.substring(0, 14)}...` : `${props.author_name}`}</Text>

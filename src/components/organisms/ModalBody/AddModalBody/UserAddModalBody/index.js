@@ -71,8 +71,8 @@ const UserAddModalBody = (props) => {
         <TouchableOpacity style={styles.formImage} onPress={() => handleChoosePhoto()}>
           {
             image
-              ? <Image source={{ uri: image.uri }} style={styles.image} />
-              : <ImageBackground source={defaultImage} style={styles.image}></ImageBackground>
+              ? <Image source={{ uri: image.uri }} style={styles.image} resizeMethod="resize" />
+              : <Image source={defaultImage} style={styles.image} resizeMethod="resize" />
           }
           <Text style={{ textAlign: 'center' }}>Touch to upload an image</Text>
         </TouchableOpacity>

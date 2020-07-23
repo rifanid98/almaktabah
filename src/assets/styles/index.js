@@ -15,6 +15,7 @@ import profileStyles from './profileStyles'
 import managerStyles from './managerStyles'
 import modalStyles from './modalStyles'
 import atomStyles from './atomStyles'
+import templateStyles from './templateStyles'
 
 export {
   reset,
@@ -33,5 +34,6 @@ export {
   profileStyles,
   managerStyles,
   modalStyles,
-  atomStyles
+  atomStyles,
+  templateStyles
 }

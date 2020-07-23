@@ -12,7 +12,7 @@ const Loading = () => {
         alignItems: 'center',
         backgroundColor: color.primary
       }}>
-        <Image source={require('assets/images/loading.png')} />
+        <Image source={require('assets/images/loading.png')} resizeMethod="resize" />
         <Text style={{
           marginTop: 10,
           fontFamily: font.title,

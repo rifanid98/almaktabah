@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { logout, getBooks, getUsedGenres } from 'modules';
 import { mainStyles as styles} from 'assets/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faFolderOpen, faBook, faHistory } from '@fortawesome/free-solid-svg-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SearchGridItem, GenresList } from 'components';
 import { createUrlParamFromObj, alert, convertDate } from 'utils';
+import Animated from 'react-native-reanimated';
 
 class Home extends Component {
   constructor(props) {
@@ -49,15 +50,6 @@ class Home extends Component {
   }
   logout() {
     this.props.logout()
-  }
-  moreBooks () {
-    this.setState({
-      ...this.state,
-      page: this.state.pagination.page+1
-    }, () => {
-      console.log('changed state')
-        this.getBooks()
-    })
   }
   goToDetailBook (data) {
     this.props.navigation.navigate('detail', { data: data })
@@ -103,13 +95,63 @@ class Home extends Component {
         })
       : alert('Token Failed', 'Cannot find token...')
   }
-
+  loadMoreBook = () => {
+    this.setState({
+      ...this.state,
+      pagination: {
+        ...this.state.pagination,
+        page: this.state.pagination.page+1
+      }
+    }, () => {
+        const params = createUrlParamFromObj(this.state.pagination);
+        const token = this.props.auth.data.tokenLogin;
+        token
+          ? this.props.getBooks(token, params)
+            .then((res) => {
+              const oldData = this.state.books
+              const newData = res.value.data.data.result;
+              if (newData.length > 0) {
+                console.log(newData)
+                newData.map(data => {
+                  oldData.push(data)
+                })
+                this.setState({
+                  ...this.state,
+                  books: oldData
+                })
+              } else {
+                this.setState({
+                  ...this.state,
+                  pagination: {
+                    ...this.state.pagination,
+                    page: this.state.pagination.page-1
+                  }
+                })
+              }
+            }).catch((error) => {
+              console.log(`get books failed`)
+            })
+          : alert('Token Failed', 'Cannot find token...')
+    })
+  }
+  isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    const paddingToBottom = 20
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+  }
   render() {
     const date = convertDate().split(' ');
     return (
       <>
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView
+            scrollEventThrottle={16}
+            onMomentumScrollEnd={({ nativeEvent }) => {
+              if (this.isCloseToBottom(nativeEvent)) {
+                this.loadMoreBook()
+              }
+            }}
+          >
             {/* Header */}
             <View style={styles.header}>
               {/* Brand */}
@@ -123,15 +165,22 @@ class Home extends Component {
                     <Text style={styles.monthYear}>{`${date[2]}, ${date[3]}`}</Text>
                   </View>
                 </View>
-                {
-                  this.props.auth.data.role < 3 && (
-                    <View style={styles.admin}>
+                <View style={styles.admin}>
+                  <Text style={styles.adminIcon} onPress={() => this.props.navigation.navigate('myBook', { user_id: this.props.auth.data.user_id })}>
+                    <FontAwesomeIcon icon={faBook} size={30} />
+                  </Text>
+                  <Text style={styles.adminIcon} onPress={() => this.props.navigation.navigate('myHistory', { user_id: this.props.auth.data.user_id })}>
+                    <FontAwesomeIcon icon={faHistory} size={30} />
+                  </Text>
+                  {
+                    this.props.auth.data.role < 3 && (
                       <Text style={styles.adminIcon} onPress={() => this.props.navigation.navigate('manager', { user_id: 1 })}>
                         <FontAwesomeIcon icon={faFolderOpen} size={30} />
                       </Text>
-                    </View>
-                  )
-                }
+                    )
+                  }
+                </View>
+                
                 <View>
                   <View style={styles.profileIcon}>
                     <Text style={styles.myText} onPress={() => this.props.navigation.navigate('profile', { user_id: 1 })}>
@@ -139,6 +188,7 @@ class Home extends Component {
                       <Image
                         style={styles.profileImage}
                         source={{uri: this.props.auth.data.image}}
+                        resizeMethod="resize" 
                       />
                     </Text>
                   </View>
@@ -177,7 +227,8 @@ class Home extends Component {
                             onPress={() => this.goToDetailBook(book)} >
                             <Image
                               style={styles.bookImage}
-                              source={{ uri: book.image }} />
+                              source={{ uri: book.image }}
+                              resizeMethod="resize" />
                           </TouchableOpacity>
                         </>
                       )
@@ -237,13 +288,10 @@ class Home extends Component {
                     />
                   ))
                 }
-                <Text
-                  style={{ textAlign: 'center', flex: 1, padding: 20, backgroundColor: 'orange' }}
-                  onPress={() => this.moreBooks()}
-                >{this.state.loading ? 'Loading...' : 'Load More'}</Text>
               </View>
             </View>
           </ScrollView>
+          {this.props.books.isLoading && <Text style={{ position: 'absolute', bottom: 20, right: 0, left: 0, textAlign: 'center' }}>Loading...</Text>}
         </View>
       </>
     )
