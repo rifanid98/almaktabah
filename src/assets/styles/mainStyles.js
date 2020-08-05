@@ -90,8 +90,8 @@ const mainStyles = StyleSheet.create({
     marginRight: 20
   },
   adminIcon: {
-    padding: 20,
-    width: 20
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
 
   // Profile
