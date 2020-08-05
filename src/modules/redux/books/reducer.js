@@ -95,6 +95,48 @@ const books = (state = initialState, action) => {
         errorMsg: '',
       }
 
+    case actionType.GET_TRENDING_BOOKS_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    case actionType.GET_TRENDING_BOOKS_REJECTED:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: 'Data Rejected'
+      }
+    case actionType.GET_TRENDING_BOOKS_FULFILLED:
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        errorMsg: '',
+      }
+
+
+    case actionType.GET_NEW_BOOKS_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    case actionType.GET_NEW_BOOKS_REJECTED:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: 'Data Rejected'
+      }
+    case actionType.GET_NEW_BOOKS_FULFILLED:
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        errorMsg: '',
+      }
     default:
       return state;
   }
