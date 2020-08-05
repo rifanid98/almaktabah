@@ -28,6 +28,30 @@ export const getDetailBook = (token, id) => {
     })
   }
 }
+export const getTrendingBooks = (token) => {
+  return {
+    type: actionType.GET_TRENDING_BOOKS,
+    payload: Axios({
+      method: 'GET',
+      url: `${apiUri.books}/all/trending`,
+      headers: {
+        'authorization': token
+      }
+    })
+  }
+}
+export const getNewBooks = (token) => {
+  return {
+    type: actionType.GET_NEW_BOOKS,
+    payload: Axios({
+      method: 'GET',
+      url: `${apiUri.books}/all/new`,
+      headers: {
+        'authorization': token
+      }
+    })
+  }
+}
 export const addBook = (token, data) => {
   return {
     type: actionType.ADD_BOOK,
