@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, TextInput, Alert, Image, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { logout, getBooks, getUsedGenres } from 'modules';
+import { logout, getBooks, getUsedGenres, getTrendingBooks, getNewBooks } from 'modules';
 import { mainStyles as styles} from 'assets/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSearch, faFolderOpen, faBook, faHistory } from '@fortawesome/free-solid-svg-icons';
@@ -20,10 +20,10 @@ class Home extends Component {
         page: 1,
         limit: 3
       },
-
       books: this.props.books.data.result ? this.props.books.data.result : [],
-      genresData: this.props.genres.data ? this.props.genres.data : []
-
+      genresData: this.props.genres.data ? this.props.genres.data : [],
+      trendingBooks: [],
+      newBooks: []
     }
   }
   /**
@@ -33,6 +33,8 @@ class Home extends Component {
     this.checkAuth()
     this.getBooks()
     this.getUsedGenres()
+    this.getTrendingBooks()
+    this.getNewBooks()
   }
   componentDidUpdate() {
     
@@ -79,7 +81,37 @@ class Home extends Component {
         }).catch((error) => {
           console.log(`get books failed`)
         })
-      : alert('Token Failed', 'Cannot find token...')
+      : console.log('Cannot find token')
+  }
+  getTrendingBooks() {
+    const token = this.props.auth.data.tokenLogin;
+    token
+      ? this.props.getTrendingBooks(token)
+        .then((res) => {
+          const trendingBooks = res.value.data.data;
+          this.setState({
+            ...this.state,
+            trendingBooks: trendingBooks
+          })
+        }).catch((error) => {
+          console.log(`get books failed`)
+        })
+      : console.log('Cannot find token')
+  }
+  getNewBooks() {
+    const token = this.props.auth.data.tokenLogin;
+    token
+      ? this.props.getNewBooks(token)
+        .then((res) => {
+          const newBooks = res.value.data.data;
+          this.setState({
+            ...this.state,
+            newBooks: newBooks
+          })
+        }).catch((error) => {
+          console.log(`get books failed`)
+        })
+      : console.log('Cannot find token')
   }
   getUsedGenres() {
     const token = this.props.auth.data.tokenLogin;
@@ -93,7 +125,7 @@ class Home extends Component {
         }).catch((error) => {
           console.log(`get genres failed`)
         })
-      : alert('Token Failed', 'Cannot find token...')
+      : console.log('Cannot find token')
   }
   loadMoreBook = () => {
     this.setState({
@@ -131,7 +163,7 @@ class Home extends Component {
             }).catch((error) => {
               console.log(`get books failed`)
             })
-          : alert('Token Failed', 'Cannot find token...')
+          : console.log('Cannot find token')
     })
   }
   isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
@@ -213,30 +245,33 @@ class Home extends Component {
               </View>
             </View>
             {/* New Arrivals */}
-            <View style={styles.newArrivals}>
-              <Text style={styles.newArrivalsTitle}>New Arrivals</Text>
-              <View style={styles.newArrivalsItems}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollView}>
-                  {
-                    this.state.books.map((book, index) => {
-                      return (
-                        <>
+            {this.state.newBooks
+              && this.state.newBooks.length > 0
+              && <View style={styles.newArrivals}>
+                <Text style={styles.newArrivalsTitle}>New Arrivals</Text>
+                <View style={styles.newArrivalsItems}>
+                  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollView}>
+                    {
+                      this.state.newBooks
+                      && this.state.newBooks.length > 0
+                      && this.state.newBooks.map((newBook, index) => {
+                        return (
                           <TouchableOpacity
                             key={index}
                             style={styles.newArrivalsItem}
-                            onPress={() => this.goToDetailBook(book)} >
+                            onPress={() => this.props.navigation.navigate('detail', { data: newBook })}
+                          >
                             <Image
                               style={styles.bookImage}
-                              source={{ uri: book.image }}
+                              source={{ uri: newBook.image }}
                               resizeMethod="resize" />
                           </TouchableOpacity>
-                        </>
-                      )
-                    })
-                  }
-                </ScrollView>
-              </View>
-            </View>
+                        )
+                      })
+                    }
+                  </ScrollView>
+                </View>
+              </View>}
             {/* Categories */}
             <View style={styles.categories}>
               <Text style={styles.categoriesTitle}>Categories</Text>
@@ -251,25 +286,34 @@ class Home extends Component {
               </View>
             </View>
             {/* Trending */}
-            <View style={styles.trending}>
-              <Text style={styles.trendingTitle}>Trending This Week</Text>
-              <View style={styles.trendingItems}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollView}>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.trendingItem}><Image style={styles.bookImage} source={require('assets/images/default.png')} /></TouchableOpacity>
-                </ScrollView>
-              </View>
-            </View>
+            {this.state.trendingBooks
+                && this.state.trendingBooks.length > 0
+                && <View style={styles.trending}>
+                  <Text style={styles.trendingTitle}>Trending This Week</Text>
+                  <View style={styles.trendingItems}>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollView}>
+                      {
+                        this.state.trendingBooks
+                          ? this.state.trendingBooks.length > 0
+                          && this.state.trendingBooks.map((trending, index) => {
+                            return (
+                              <TouchableOpacity
+                                key={index}
+                                style={styles.trendingItem}
+                                onPress={() => this.props.navigation.navigate('detail', { data: trending })}
+                              >
+                                <Image
+                                  style={styles.bookImage}
+                                  source={{ uri: trending.image }}
+                                  resizeMethod="resize" />
+                              </TouchableOpacity>
+                            )
+                          })
+                          : ''
+                      }
+                    </ScrollView>
+                  </View>
+                </View>}
             {/* All Books */}
             <View style={styles.allBooks}>
               <Text style={styles.allBooksTitle}>All Books</Text>
@@ -307,7 +351,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   logout,
   getBooks,
-  getUsedGenres
+  getUsedGenres,
+  getTrendingBooks,
+  getNewBooks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
