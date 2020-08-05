@@ -9,7 +9,6 @@ const initialState = {
 
 
 const auth = (state = initialState, action) => {
-  console.log(action.payload, 'pau=yloadddddddd')
   switch (action.type) {
     case actionType.SET_AUTH_PENDING:
       return {
