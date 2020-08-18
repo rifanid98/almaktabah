@@ -8,7 +8,7 @@ import { faSearch, faFolderOpen, faBook, faHistory } from '@fortawesome/free-sol
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SearchGridItem, GenresList } from 'components';
 import { createUrlParamFromObj, alert, convertDate } from 'utils';
-import Animated from 'react-native-reanimated';
+import { appConfig } from 'configs';
 
 class Home extends Component {
   constructor(props) {
@@ -219,7 +219,7 @@ class Home extends Component {
                       {/* profile */}
                       <Image
                         style={styles.profileImage}
-                        source={{uri: this.props.auth.data.image}}
+                        source={{uri: appConfig.url.assets + '/' + this.props.auth.data.image}}
                         resizeMethod="resize" 
                       />
                     </Text>
@@ -263,7 +263,7 @@ class Home extends Component {
                           >
                             <Image
                               style={styles.bookImage}
-                              source={{ uri: newBook.image }}
+                              source={{ uri: appConfig.url.assets + '/' + newBook.image }}
                               resizeMethod="resize" />
                           </TouchableOpacity>
                         )
@@ -304,7 +304,7 @@ class Home extends Component {
                               >
                                 <Image
                                   style={styles.bookImage}
-                                  source={{ uri: trending.image }}
+                                  source={{ uri: appConfig.url.assets + '/' + trending.image }}
                                   resizeMethod="resize" />
                               </TouchableOpacity>
                             )

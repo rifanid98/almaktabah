@@ -9,6 +9,7 @@ import { getRole } from 'utils';
 import { logout, patchUser, getDetailUser, setAuth } from 'modules';
 import { createImageFormData } from 'utils';
 import ImagePicker from 'react-native-image-picker'
+import { appConfig } from 'configs';
 
 const Profile = (props) => {
   const [image, setImage] = useState(null)
@@ -96,7 +97,7 @@ const Profile = (props) => {
               {
                 image
                   ? <Image source={{ uri: image.uri }} style={styles.image} resizeMethod="resize" />
-                  : <Image style={styles.image} source={{ uri: props.auth.data.image }} resizeMethod="resize" />
+                  : <Image style={styles.image} source={{ uri: appConfig.url.assets + '/' + props.auth.data.image }} resizeMethod="resize" />
               }
             </TouchableOpacity>
             <View style={styles.profileInfo}>

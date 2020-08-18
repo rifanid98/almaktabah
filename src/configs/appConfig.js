@@ -1,14 +1,12 @@
-import { API_URL, ACTIVE_CONFIG } from '@env';
-const activeConfig = ACTIVE_CONFIG;
-const origin = 'localhost:8081';
-// const origin = window.location.origin;
+import { API_URL, ACTIVE_CONFIG, ORIGIN } from "./env";
 
+const activeConfig = ACTIVE_CONFIG;
 const constants = {
   dev: {
     url: {
-      api: "http:///192.168.42.15:3000/libraryapp-api",
-      assets: "../assets",
-      origin: origin
+      api: API_URL,
+      assets: ORIGIN + '/libraryapp-api/images',
+      origin: ORIGIN
     }
   },
 

@@ -2,12 +2,13 @@ import React from 'react'
 import { Text, View, Image, ImageBackground } from 'react-native'
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { moleculesStyles as styles } from 'assets/styles';
+import { appConfig } from 'configs';
 
 const SearchGridItem = (props) => {
   const goToDetailBook = (data) => {
     props.navigation.navigate('detail', { data: data })
   }
-  const image = { uri: props.image }
+  const image = { uri: appConfig.url.assets + '/' + props.image }
   return (
     <>
       <TouchableOpacity
