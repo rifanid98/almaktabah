@@ -13,9 +13,6 @@ const SearchBookByCategory = (props) => {
     sortType: {
       asc: 'A-Z',
       desc: 'Z-A'
-    },
-    sortBy: {
-      date: 'newest'
     }
   }
   // get data when user choosed one category from home screen
