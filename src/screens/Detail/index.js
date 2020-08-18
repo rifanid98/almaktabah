@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { checkPendingHistory, borrowBook, returnBook } from 'modules';
 import { ScreenHeader } from 'components';
 import { alert } from 'utils';
+import { appConfig } from 'configs';
 
 const Detail = (props) => {
   const data = props.route.params.data
@@ -74,7 +75,7 @@ const Detail = (props) => {
         <ScrollView>
           <View style={styles.content}>
             <View style={styles.image}>
-              <Image style={styles.bookImage} source={{ uri: data.image }} resizeMethod="resize" />
+              <Image style={styles.bookImage} source={{ uri: appConfig.url.assets + '/' + data.image }} resizeMethod="resize" />
             </View>
             <Text style={styles.title}>{data.title}</Text>
             <Text style={styles.author}>{data.author_name}</Text>
