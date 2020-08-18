@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:3000/libraryapp-api';
-export const ORIGIN = 'http://localhost:3000'
+export const API_URL = 'http://34.207.84.36/libraryapp-api';
+export const ORIGIN = 'http://34.207.84.36'
 export const ACTIVE_CONFIG = 'dev';
 export const ACTIVE_THEME = 'primary';
