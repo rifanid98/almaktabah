@@ -1,7 +1,7 @@
 # <p align="center">Al Maktabah</p>
 
 <p align="center">
-  <image src="https://github.com/rifanid98/almaktabah/blob/master/src/assets/images/logo.png" alt="almaktabah logo">
+  <image src="https://github.com/rifanid98/almaktabah/blob/master/src/assets/images/logo.png" width="100" alt="almaktabah logo">
 </p>
 <p align="center">
   Built with React Native, Build with love.
