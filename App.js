@@ -11,7 +11,8 @@ import { NavigationContainer } from '@react-navigation/native';
  * @format
  * @flow strict-local
  */
-import React from 'react';
+import React, { useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 /**
  * @Redux
@@ -28,7 +29,9 @@ import { RootGate } from 'gates';
 
 const App = (props) => {
   const persistor = persistStore(store);
-  
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
   return (
     <>
       <Provider store={store}>
