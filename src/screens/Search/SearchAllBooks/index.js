@@ -12,10 +12,6 @@ const SearchAllBooks = (props) => {
     sortType: {
       asc: 'A-Z',
       desc: 'Z-A'
-    },
-    sortBy: {
-      genre: 'genre',
-      date: 'newest'
     }
   }
   useEffect(() => {

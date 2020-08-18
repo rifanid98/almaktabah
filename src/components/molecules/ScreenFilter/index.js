@@ -16,10 +16,10 @@ const ScreenFilter = (props) => {
         <View style={styles.filterItemsLeft}>
           <Text style={[styles.filterItem]}>Result</Text>
         </View>
-        <View style={styles.filterItemsRight}>
+        {/* <View style={styles.filterItemsRight}>
           <Text style={[styles.filterItem, styles.filterItemRight]} onPress={() => setSort(!sort)}>{sortType}</Text>
           {Object.keys(searchSortBy).map((sortBy, index) => <Text key={index} style={[styles.filterItem, styles.filterItemRight]} onPress={() => setSortBy(sortBy)}>{searchSortBy[`${sortBy}`]}</Text>)}
-        </View>
+        </View> */}
       </View>
     </>
   )
