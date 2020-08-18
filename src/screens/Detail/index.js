@@ -15,10 +15,6 @@ const Detail = (props) => {
     checkBorrowedBook()
   }, [])
 
-  useEffect(() => {
-    console.log(borrowed);
-  }, [borrowed])
-
   const checkBorrowedBook = () => {
     const token = props.auth.data.tokenLogin;
     const bookId = data.book_id;
