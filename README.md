@@ -60,22 +60,22 @@ This page is used to manage data.
 ## Screenshots
 
 <div align="center">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/splash.jpg">   
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/onboard.jpg">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/login.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/splash.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/onboard.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/login.jpg">
 </div>
 <div align="center">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/signup.jpg">   
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/home.jpg">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/detail.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/signup.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/home.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/detail.jpg">
 </div>
 <div align="center">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/search.jpg">   
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/categories.jpg">   
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/manager.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/search.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/categories.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/manager.jpg">   
 </div>
 <div align="center">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/profile.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/profile.jpg">   
 </div>
 
 ## Usage
