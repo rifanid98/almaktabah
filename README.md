@@ -60,23 +60,27 @@ This page is used to manage data.
 ## Screenshots
 
 <div align="center">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/login.jpg">   
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/register.jpg">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/home.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/splash.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/onboard.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/login.jpg">
 </div>
 <div align="center">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/chat.jpg">   
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/profile.jpg">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/friends-request.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/signup.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/home.jpg">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/detail.jpg">
 </div>
 <div align="center">
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/maps-friends-list.jpg">   
-    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/master/screenshots/maps-users-list.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/search.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/categories.jpg">   
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/manager.jpg">   
+</div>
+<div align="center">
+    <img width="250" src="https://github.com/rifanid98/almaktabah/blob/develop/screenshots/profile.jpg">   
 </div>
 
 ## Usage
 
-- For common users, you can download the release apk at [google drive]()
+- For common users, you can download the release apk at [google drive](https://drive.google.com/file/d/1O9phPZfWu4-hGVL1tgrUreyJmci8TzKc/view?usp=sharing)
 - For developer, you can continue to follow the instructions bellow.
 
 ### Prerequisites
