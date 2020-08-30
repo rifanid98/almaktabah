@@ -19,7 +19,7 @@ const SearchAllBooks = (props) => {
   }, [props.books])
 
   const getBooksByKeyword = (keyword) => {
-    if (keyword.length < 5) return;
+    if (keyword.length < 1) return;
     setSearch(true)
     const search = {
       author: keyword,

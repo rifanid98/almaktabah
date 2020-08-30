@@ -60,9 +60,19 @@ class Home extends Component {
     this.props.navigation.navigate('searchBookByCategory', { name: genreName })
   }
   refreshState = () => {
-    this.checkAuth()
-    this.getBooks()
-    this.getUsedGenres()
+    this.setState({
+      ...this.state,
+      pagination: {
+        page: 1,
+        limit: 3
+      }
+    }, () => {
+        this.checkAuth()
+        this.getBooks()
+        this.getUsedGenres()
+        this.getTrendingBooks()
+        this.getNewBooks()
+    })
   }
 
   /**
@@ -181,6 +191,8 @@ class Home extends Component {
             onMomentumScrollEnd={({ nativeEvent }) => {
               if (this.isCloseToBottom(nativeEvent)) {
                 this.loadMoreBook()
+              } else {
+                this.refreshState()
               }
             }}
           >

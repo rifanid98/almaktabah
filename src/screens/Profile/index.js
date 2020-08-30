@@ -171,7 +171,7 @@ const Profile = (props) => {
               />
             </View>
             <View style={styles.forget}>
-              <Text style={styles.forgetText}>Forgot Password?</Text>
+              {/* <Text style={styles.forgetText}>Forgot Password?</Text> */}
             </View>
             <View style={styles.buttonWrapper}>
               <Text style={styles.button} onPress={handleSubmit(onSubmit)}>Save</Text>

@@ -7,6 +7,7 @@ import { getUsers, patchUser } from 'modules';
 import { alert, createUrlParamFromObj, createImageFormData } from 'utils';
 import ImagePicker from 'react-native-image-picker'
 import { managerStyles as styles, colorScheme as color} from "assets/styles";
+import { appConfig } from 'configs';
 
 const UserEditModalBody = (props) => {
   const [role, setRole] = useState(props.data.role)
@@ -73,7 +74,7 @@ const UserEditModalBody = (props) => {
           {
             image
               ? <Image source={{ uri: image.uri }} style={styles.image} resizeMethod="resize" />
-              : <Image source={{ uri: props.data.image }} style={styles.image} resizeMethod="resize" />
+              : <Image source={{ uri: appConfig.url.assets + '/' +  props.data.image }} style={styles.image} resizeMethod="resize" />
           }
           <Text style={{ textAlign: 'center' }}>Touch to upload an image</Text>
         </TouchableOpacity>

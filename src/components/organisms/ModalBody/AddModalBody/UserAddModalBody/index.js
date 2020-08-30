@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import { getUsers, addUser } from 'modules';
 import { alert, createUrlParamFromObj, createImageFormData } from 'utils';
 import ImagePicker from 'react-native-image-picker'
-
+import { useNavigation } from '@react-navigation/native';
 import { managerStyles as styles, colorScheme as color} from "assets/styles";
 
 const UserAddModalBody = (props) => {
+  const navigation = useNavigation();
   const [role, setRole] = useState(3)
-  const [defaultImage] = useState(require('assets/images/default.png'))
+  const [defaultImage] = useState(require('assets/images/avatar.png'))
   const [image, setImage] = useState(null)
 
   const { control, handleSubmit, errors } = useForm();
@@ -53,7 +54,9 @@ const UserAddModalBody = (props) => {
     props.addUser(token, formData)
       .then((res) => {
         if (res.value.status === 201) {
-          Alert.alert('Success', 'User added successfully')
+          Alert.alert('Success', 'User added successfully',
+            [{ text: "OK", onPress: () => navigation.goBack() }], { cancelable: false }
+          );
           getUsers()
         }
       })

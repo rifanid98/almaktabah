@@ -8,6 +8,7 @@ import { getAuthors, getGenres, patchBook, getBooks } from 'modules';
 import { connect } from 'react-redux';
 import { alert, createUrlParamFromObj, createImageFormData } from 'utils';
 import ImagePicker from 'react-native-image-picker'
+import { appConfig } from 'configs';
 
 const BookEditModalBody = (props) => {
   const [genre, setGenre] = useState(props.data.genre_id)
@@ -107,7 +108,7 @@ const BookEditModalBody = (props) => {
           {
             image
               ? <Image source={{ uri: image.uri }} style={styles.image} resizeMethod="resize" />
-              : <Image source={{ uri: props.data.image }} style={styles.image} resizeMethod="resize" />
+              : <Image source={{ uri: appConfig.url.assets + '/' + props.data.image }} style={styles.image} resizeMethod="resize" />
           }
           <Text style={{ textAlign: 'center' }}>Touch to upload an image</Text>
         </TouchableOpacity>
@@ -131,11 +132,13 @@ const BookEditModalBody = (props) => {
           onValueChange={(itemValue, itemIndex) => setGenre(itemValue)}>
           {
             props.genres.data
-              ? props.genres.data.map((genre, index) => {
-                return (
-                  <Picker.Item key={index} label={genre.name} value={genre.genre_id} />        
-                )
-              })
+              ? props.genres.data.length > 0 
+                ? props.genres.data.map((genre, index) => {
+                  return (
+                    <Picker.Item key={index} label={genre.name} value={genre.genre_id} />
+                  )
+                })
+                : []
               : []
           }
         </Picker>
@@ -147,11 +150,13 @@ const BookEditModalBody = (props) => {
           onValueChange={(itemValue, itemIndex) => setAuthor(itemValue)}>
           {
             props.authors.data
-              ? props.authors.data.map((author, index) => {
-                return (
-                  <Picker.Item key={index} label={author.name} value={author.author_id} />
-                )
-              })
+              ? props.authors.data.length > 0 
+                ? props.authors.data.map((author, index) => {
+                  return (
+                    <Picker.Item key={index} label={author.name} value={author.author_id} />
+                  )
+                })
+                : []
               : []
           }
         </Picker>
@@ -173,7 +178,6 @@ const BookEditModalBody = (props) => {
           containerStyle={styles.textareaContainer}
           style={styles.textarea}
           defaultValue={props.data.description}
-          maxLength={120}
           onChangeText={text => setDescription(text)}
           underlineColorAndroid={'transparent'}
         />

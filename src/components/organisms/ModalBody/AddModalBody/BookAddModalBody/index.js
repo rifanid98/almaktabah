@@ -8,8 +8,10 @@ import { getAuthors, getGenres, getBooks, addBook } from 'modules';
 import { connect } from 'react-redux';
 import { createUrlParamFromObj, createImageFormData } from 'utils';
 import ImagePicker from 'react-native-image-picker'
+import { useNavigation } from '@react-navigation/native';
 
 const BookAddModalBody = (props) => {
+  const navigation = useNavigation();
   const [genre, setGenre] = useState(props.genres.data && props.genres.data[0].genre_id)
   const [author, setAuthor] = useState(props.authors.data && props.authors.data[0].author_id)
   const [defaultImage] = useState(require('assets/images/default.png'))
@@ -82,7 +84,9 @@ const BookAddModalBody = (props) => {
     props.addBook(token, formData)
       .then((res) => {
         if (res.value.status === 201) {
-          Alert.alert('Success', 'Book added successfully')
+          Alert.alert('Success', 'Book added successfully',
+            [{ text: "OK", onPress: () => navigation.goBack() }],{ cancelable: false }
+          );
           getBooks()
         }
       })
