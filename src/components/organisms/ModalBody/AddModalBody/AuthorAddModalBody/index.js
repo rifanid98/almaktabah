@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, ScrollView } from 'react-native';
+import { Text, View, TextInput, ScrollView, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { getAuthors, addAuthor } from 'modules';
 import { createUrlParamFromObj, alert, createFormData } from 'utils';
-
 import { managerStyles as styles, colorScheme as color} from "assets/styles";
+import { useNavigation } from '@react-navigation/native';
 
 const AuthorAddModalBody = (props) => {
+  const navigation = useNavigation();
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = data => {
@@ -35,7 +36,9 @@ const AuthorAddModalBody = (props) => {
     props.addAuthor(token, formData)
       .then((res) => {
         if (res.value.status === 201) {
-          alert('Success', 'Author added successfully')
+          Alert.alert('Success', 'Author added successfully',
+            [{ text: "OK", onPress: () => navigation.goBack() }], { cancelable: false }
+          );
           getAuthors()
         }
       })

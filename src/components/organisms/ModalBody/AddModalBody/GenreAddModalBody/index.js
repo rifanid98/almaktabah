@@ -1,12 +1,14 @@
 import React from 'react';
-import { Text, View, TextInput, ScrollView } from 'react-native';
+import { Text, View, TextInput, ScrollView, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { managerStyles as styles, colorScheme as color} from "assets/styles";
 import { connect } from 'react-redux';
 import { getGenres, addGenre } from 'modules';
 import { createUrlParamFromObj, alert, createImageFormData } from 'utils';
+import { useNavigation } from '@react-navigation/native';
 
 const GenreAddModalBody = (props) => {
+  const navigation = useNavigation();
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = data => {
@@ -34,7 +36,9 @@ const GenreAddModalBody = (props) => {
     props.addGenre(token, formData)
       .then((res) => {
         if (res.value.status === 201) {
-          alert('Success', 'Genre added successfully')
+          Alert.alert('Success', 'Genre added successfully',
+            [{ text: "OK", onPress: () => navigation.goBack() }], { cancelable: false }
+          );
           getGenres()
         }
       })

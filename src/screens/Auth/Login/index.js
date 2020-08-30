@@ -87,7 +87,7 @@ const Login = (props) => {
                 style={styles.feedbackText}
                 onPress={() => props.navigation.navigate('signup1')}
               >Register</Text>
-              <Text style={[styles.feedbackText, styles.feedbackTextRight]}>Forgot Password ?</Text>
+              {/* <Text style={[styles.feedbackText, styles.feedbackTextRight]}>Forgot Password ?</Text> */}
             </View>
 
             
